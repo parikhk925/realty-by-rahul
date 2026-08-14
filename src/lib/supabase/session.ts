@@ -19,7 +19,36 @@ export interface StudioProfile {
   demo: boolean;
 }
 
+/**
+ * Demo studio: an explicit, deliberate opt-in.
+ *
+ * The original code failed closed when Supabase was missing, because a silent
+ * fallback meant one absent env var opened the whole studio to the public.
+ * That protection stays: this returns true only when someone has actively set
+ * DEMO_STUDIO=true, never merely because config is incomplete. Do not set it
+ * on a deployment holding real customer data.
+ */
+export function isDemoStudio() {
+  return (
+    !isSupabaseConfigured() && process.env.DEMO_STUDIO?.trim() === "true"
+  );
+}
+
+const DEMO_PROFILE: StudioProfile = {
+  id: "demo-rahul",
+  fullName: "Rahul Jakhar",
+  email: "rahul@realtybyrahul.ae",
+  phone: "",
+  whatsapp: "",
+  role: "admin",
+  avatarUrl: undefined,
+  mustChangePassword: false,
+  demo: true,
+};
+
 export const getStudioProfile = cache(async (): Promise<StudioProfile> => {
+  if (isDemoStudio()) return DEMO_PROFILE;
+
   // Fail closed. This previously handed back a full admin profile whenever
   // Supabase config was missing, which meant a single absent env var — on a
   // preview deploy, a bad rename, a partial rollout — silently opened the

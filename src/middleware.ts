@@ -41,6 +41,10 @@ export async function middleware(request: NextRequest) {
   // here used to combine with the studio's demo profile to grant full admin
   // access on any deploy that was missing its config.
   if (!url || !key) {
+    // Explicit demo opt-in — see isDemoStudio(). Never a silent fallback:
+    // without this flag the studio still fails closed when config is missing.
+    if (process.env.DEMO_STUDIO?.trim() === "true") return NextResponse.next();
+
     return isPublicPath(request.nextUrl.pathname)
       ? NextResponse.next()
       : NextResponse.redirect(new URL("/login", request.url));
