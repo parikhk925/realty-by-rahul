@@ -496,28 +496,31 @@ export default function PitchPage() {
             ]}
           />
 
-          <div className="space-y-5">
-            <figure className="kt-avoid-break">
-              <EstateCrmMock />
-              <figcaption className="mt-3 text-[11px] text-[var(--kt-body)]">
-                The property desk view — every conversation scored, matched to
-                stock and ranked with a next action.
-              </figcaption>
-            </figure>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {[
-                ["Qualifies", "Budget, area, type, layout, timeline, financing"],
-                ["Recommends", "From your real stock, with a reason per match"],
-                ["Books", "Viewing requests captured and flagged"],
-              ].map(([h, d]) => (
-                <div key={h} className="kt-card p-4">
-                  <p className="text-[12px] font-semibold">{h}</p>
-                  <p className="mt-1 text-[11px] leading-relaxed text-[var(--kt-body)]">{d}</p>
+          <div className="space-y-4">
+            {([
+              ["chat", "Qualifies without a form", "Budget, area, property type, layout, timeline and financing — pulled from plain language."],
+              ["building", "Recommends real stock", "Matched against your own inventory, with a reason given for every suggestion."],
+              ["calendar", "Books the viewing", "Viewing requests captured, flagged and pushed to the advisor's day."],
+              ["gauge", "Scores before handover", "The advisor opens a lead that is already ranked, not a raw message."],
+            ] as const).map(([ic, h, d]) => (
+              <div key={h} className="kt-card kt-avoid-break flex gap-4 p-5">
+                <Icon name={ic} />
+                <div>
+                  <p className="text-[13px] font-semibold">{h}</p>
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--kt-body)]">{d}</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
+
+        <figure className="kt-avoid-break mt-8">
+          <EstateCrmMock />
+          <figcaption className="mt-3 text-[11px] text-[var(--kt-body)]">
+            The property desk view — every conversation scored, matched to
+            stock and ranked with a next action.
+          </figcaption>
+        </figure>
       </Section>
 
       {/* ---------------------------------------------------- use case: clinic */}
