@@ -1,0 +1,173 @@
+/*
+  Kaivan Tech deck styling.
+  Palette taken from the logo: cyan → blue → violet → magenta on deep navy ink.
+  Scoped under .kt-root so it cannot leak into the Realty by Rahul brand.
+*/
+
+.kt-root {
+  --kt-ink: #10131f;
+  --kt-ink-2: #1a1f30;
+  --kt-body: #4a5169;
+  --kt-line: #e4e7f0;
+  --kt-surface: #ffffff;
+  --kt-canvas: #f7f8fc;
+
+  --kt-cyan: #00b8f0;
+  --kt-blue: #2563eb;
+  --kt-violet: #7c3aed;
+  --kt-magenta: #ec4899;
+
+  --kt-gradient: linear-gradient(
+    100deg,
+    var(--kt-cyan) 0%,
+    var(--kt-blue) 34%,
+    var(--kt-violet) 66%,
+    var(--kt-magenta) 100%
+  );
+
+  background: var(--kt-canvas);
+  color: var(--kt-ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.kt-root h1,
+.kt-root h2,
+.kt-root h3 {
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  color: var(--kt-ink);
+}
+
+.kt-grad-text {
+  background: var(--kt-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.kt-rule {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--kt-gradient);
+}
+
+/* Section eyebrow, mirroring the "KAIVAN TECH <SECTION>" style in the profile. */
+.kt-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--kt-blue);
+}
+
+.kt-card {
+  background: var(--kt-surface);
+  border: 1px solid var(--kt-line);
+  border-radius: 20px;
+  box-shadow: 0 10px 34px rgba(19, 27, 56, 0.06);
+}
+
+.kt-shot {
+  border-radius: 16px;
+  border: 1px solid var(--kt-line);
+  box-shadow: 0 24px 60px rgba(19, 27, 56, 0.16);
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Phone frame for the WhatsApp mockups. */
+.kt-phone {
+  width: 300px;
+  border-radius: 34px;
+  padding: 10px;
+  background: linear-gradient(160deg, #232838, #0e111b);
+  box-shadow: 0 30px 70px rgba(16, 19, 31, 0.32);
+}
+
+.kt-phone-screen {
+  border-radius: 26px;
+  overflow: hidden;
+  background: #e5ddd5;
+}
+
+.kt-wa-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #075e54;
+  color: #fff;
+  padding: 10px 12px;
+}
+
+.kt-wa-body {
+  padding: 12px 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  background-color: #e5ddd5;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+  background-size: 14px 14px;
+  min-height: 330px;
+}
+
+.kt-bubble {
+  max-width: 84%;
+  padding: 7px 10px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.07);
+}
+
+.kt-bubble-in {
+  align-self: flex-start;
+  background: #fff;
+  border-top-left-radius: 3px;
+}
+
+.kt-bubble-out {
+  align-self: flex-end;
+  background: #dcf8c6;
+  border-top-right-radius: 3px;
+}
+
+.kt-chip {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1px solid var(--kt-line);
+  background: #fff;
+  color: var(--kt-body);
+}
+
+/* Print: turn the scroll page into a clean PDF. */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  .kt-root {
+    background: #fff;
+  }
+
+  .kt-no-print {
+    display: none !important;
+  }
+
+  .kt-page-break {
+    break-before: page;
+  }
+
+  .kt-avoid-break {
+    break-inside: avoid;
+  }
+
+  .kt-shot,
+  .kt-card {
+    box-shadow: none;
+  }
+}
