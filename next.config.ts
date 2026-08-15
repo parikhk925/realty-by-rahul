@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
       "./node_modules/@img/sharp-linux-x64/**",
       "./node_modules/@img/sharp-libvips-linux-x64/**",
     ],
+    // The dossier route generates the PDF itself when no file is stored. That
+    // path is pure JS today, but sampling a brochure's accent colour pulls in
+    // MuPDF, so trace it here rather than discover the 500 in production.
+    "/dossier/**": ["./node_modules/mupdf/dist/**"],
   },
   images: {
     remotePatterns: [

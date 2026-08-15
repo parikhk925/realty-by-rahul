@@ -20,7 +20,7 @@ const INTERIORS = [
 const gallery = (offset: number) =>
   [0, 1, 2].map((i) => img(INTERIORS[(offset + i) % INTERIORS.length]));
 
-export const SEED_PROPERTIES = [
+const RAW_SEEDS = [
   {
     id: "rbr-001",
     slug: "marina-vista-2br-emaar-beachfront",
@@ -292,3 +292,17 @@ export const SEED_PROPERTIES = [
     amenities: ["Reception", "Meeting suites", "Retail podium", "Metro nearby"],
   },
 ];
+
+/**
+ * Every seed listing carries a dossier.
+ *
+ * The route builds the file on demand from the listing itself, so there is
+ * nothing stored to point at — marking it ready is what surfaces the download
+ * control. A listing published through Blob overwrites this with its own
+ * generated file.
+ */
+export const SEED_PROPERTIES = RAW_SEEDS.map((property) => ({
+  ...property,
+  pdfUrl: `/dossier/${property.slug}`,
+  pdfStatus: "ready" as const,
+}));

@@ -371,25 +371,25 @@ export function PublicPortfolioExperience({
     <div className="min-h-screen overflow-x-clip bg-[#f7fbfe] pb-28 text-[#10243a] sm:pb-0">
       <header className="absolute inset-x-0 top-0 z-50">
         <div className="mx-auto flex h-[76px] max-w-[1320px] items-center gap-3 px-5 sm:h-[86px] sm:px-8 lg:px-12">
-          <BrandMark className="min-w-0 flex-1" />
-          <nav className="hidden items-center gap-7 text-xs font-medium text-[#47637d] md:flex">
-            <button type="button" onClick={scrollToPortfolio} className="transition-colors hover:text-[#102f4b]">
+          <BrandMark className="min-w-0 flex-1 text-white" />
+          <nav className="hidden items-center gap-7 text-xs font-medium text-white/65 md:flex">
+            <button type="button" onClick={scrollToPortfolio} className="transition-colors hover:text-white">
               Portfolio
             </button>
-            <a href="#advisory" className="transition-colors hover:text-[#102f4b]">
+            <a href="#advisory" className="transition-colors hover:text-white">
               Advisory
             </a>
           </nav>
           <Link
             href="/login"
             aria-label="Agent login"
-            className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/80 bg-white/68 text-[#56708a] shadow-[0_8px_28px_rgba(32,76,120,.09)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:bg-white hover:text-[#102f4b]"
+            className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.07] text-white/70 shadow-[0_8px_28px_rgba(0,0,0,.2)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:bg-white/15 hover:text-white"
           >
             <UserRound className="size-4" />
           </Link>
           <Button
             asChild
-            className="hidden h-10 rounded-full bg-[#102f4b] px-5 text-white shadow-[0_10px_24px_rgba(16,47,75,.16)] hover:bg-[#17496f] sm:inline-flex"
+            className="hidden h-10 rounded-full bg-[linear-gradient(120deg,#e6c188,#cfa257)] px-5 font-semibold text-[#22160a] shadow-[0_10px_24px_rgba(207,162,87,.3)] hover:brightness-105 sm:inline-flex"
           >
             <a href={whatsappUrl} target="_blank" rel="noreferrer">
               Ask Rahul <ArrowUpRight />
@@ -400,12 +400,12 @@ export function PublicPortfolioExperience({
 
       <main>
         <section className="px-2.5 pt-2.5 sm:px-4 sm:pt-4">
-          <div className="relative mx-auto min-h-[760px] max-w-[1480px] overflow-hidden rounded-[28px] border border-white bg-[radial-gradient(circle_at_80%_4%,rgba(255,255,255,.95),transparent_25%),radial-gradient(circle_at_12%_70%,rgba(255,228,178,.72),transparent_34%),radial-gradient(circle_at_92%_82%,rgba(163,205,255,.55),transparent_38%),linear-gradient(145deg,#eaf8ff_0%,#d4ebff_46%,#f2f9ff_100%)] px-5 pb-6 pt-[104px] shadow-[0_28px_100px_rgba(39,87,132,.13)] sm:min-h-[820px] sm:rounded-[38px] sm:px-8 sm:pb-10 sm:pt-[124px] lg:min-h-[780px] lg:px-12 lg:pt-[132px]">
-            <div className="pointer-events-none absolute -left-20 top-[30%] size-60 rounded-full border border-white/45" />
-            <div className="pointer-events-none absolute -right-32 top-14 size-[390px] rounded-full border border-white/40" />
-            <div className="pointer-events-none absolute -left-10 bottom-[12%] size-[280px] rounded-full border border-white/30" />
-            <div className="pointer-events-none absolute inset-0 opacity-[0.5] [background-image:linear-gradient(rgba(255,255,255,.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.5)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_72%)]" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,.32))]" />
+          <div className="relative mx-auto min-h-[760px] max-w-[1480px] overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(ellipse_at_18%_12%,rgba(224,184,120,.20),transparent_46%),radial-gradient(ellipse_at_88%_78%,rgba(64,120,190,.26),transparent_44%),linear-gradient(155deg,#0d1e33_0%,#112a44_44%,#0a1626_100%)] px-5 pb-6 pt-[104px] shadow-[0_28px_100px_rgba(10,22,38,.45)] sm:min-h-[820px] sm:rounded-[38px] sm:px-8 sm:pb-10 sm:pt-[124px] lg:min-h-[780px] lg:px-12 lg:pt-[132px]">
+            <div className="pointer-events-none absolute -left-20 top-[30%] size-60 rounded-full border border-white/10" />
+            <div className="pointer-events-none absolute -right-32 top-14 size-[390px] rounded-full border border-[#e0b878]/15" />
+            <div className="pointer-events-none absolute -left-10 bottom-[12%] size-[280px] rounded-full border border-white/[0.07]" />
+            <div className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(255,255,255,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.12)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_72%)]" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-[linear-gradient(180deg,transparent,rgba(247,251,254,.10))]" />
 
             <div className="relative mx-auto grid max-w-[1240px] items-center gap-5 lg:grid-cols-[.94fr_1.06fr] lg:gap-10">
               <motion.div
@@ -414,55 +414,60 @@ export function PublicPortfolioExperience({
                 transition={{ duration: 0.7, ease }}
                 className="relative z-20 text-center lg:text-left"
               >
-                <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/58 px-3 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#35637f] shadow-[0_10px_30px_rgba(42,86,127,.08)] backdrop-blur-xl lg:mx-0">
-                  <Sparkles className="size-3 text-[#257ce7]" />
-                  Private Dubai advisory
+                <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#e0b878]/30 bg-white/[0.07] px-3 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#e8cfa4] shadow-[0_10px_30px_rgba(0,0,0,.25)] backdrop-blur-xl lg:mx-0">
+                  <Sparkles className="size-3 text-[#e0b878]" />
+                  Gurgaon → Dubai · Since 2019
                 </div>
-                <h1 className="mx-auto mt-5 max-w-[690px] text-[44px] font-semibold leading-[.94] tracking-[-0.072em] text-[#102f4b] sm:mt-6 sm:text-[64px] lg:mx-0 lg:text-[76px] xl:text-[86px]">
-                  Dubai, curated around your next move.
+                <h1 className="mx-auto mt-5 max-w-[690px] text-[44px] font-semibold leading-[.94] tracking-[-0.072em] text-white sm:mt-6 sm:text-[64px] lg:mx-0 lg:text-[76px] xl:text-[86px]">
+                  Dubai property,{" "}
+                  <span className="bg-[linear-gradient(120deg,#f0d6a8,#e0b878_60%,#c99a4e)] bg-clip-text text-transparent">
+                    without the guesswork.
+                  </span>
                 </h1>
-                <p className="mx-auto mt-5 max-w-[540px] text-[12px] leading-6 text-[#4f708a] sm:text-sm sm:leading-7 lg:mx-0 lg:max-w-[470px]">
-                  Explore a considered portfolio of off-plan opportunities,
-                  ready homes and rentals—with one advisor beside you from
-                  shortlist to keys.
+                <p className="mx-auto mt-5 max-w-[540px] text-[12px] leading-6 text-white/65 sm:text-sm sm:leading-7 lg:mx-0 lg:max-w-[470px]">
+                  I&apos;m Rahul Jakhar. I place off-plan launches, ready homes
+                  and investment stock across Dubai—and I tell you when a unit
+                  isn&apos;t worth your money.
                 </p>
 
-                <div className="mx-auto mt-6 max-w-[520px] rounded-[22px] border border-white/85 bg-white/72 p-2 shadow-[0_18px_55px_rgba(37,82,126,.12)] backdrop-blur-2xl sm:flex sm:items-center sm:rounded-full lg:mx-0">
+                <div className="mx-auto mt-6 max-w-[520px] rounded-[22px] border border-white/15 bg-white/[0.07] p-2 shadow-[0_18px_55px_rgba(0,0,0,.3)] backdrop-blur-2xl sm:flex sm:items-center sm:rounded-full lg:mx-0">
                   <button
                     type="button"
                     onClick={scrollToPortfolio}
-                    className="flex h-12 w-full items-center gap-3 rounded-[16px] px-3 text-left transition-colors hover:bg-white/70 sm:min-w-0 sm:flex-1 sm:rounded-full"
+                    className="flex h-12 w-full items-center gap-3 rounded-[16px] px-3 text-left transition-colors hover:bg-white/[0.06] sm:min-w-0 sm:flex-1 sm:rounded-full"
                   >
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#e8f3ff] text-[#1764c0]">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#e0b878]/15 text-[#e0b878]">
                       <Search className="size-4" />
                     </span>
                     <span className="min-w-0">
-                      <span className="block text-[9px] font-semibold uppercase tracking-[0.12em] text-[#7891a7]">
+                      <span className="block text-[9px] font-semibold uppercase tracking-[0.12em] text-white/45">
                         Start exploring
                       </span>
-                      <span className="block truncate text-[11px] font-semibold text-[#183a57] sm:text-xs">
-                        Projects, communities, lifestyles
+                      <span className="block truncate text-[11px] font-semibold text-white sm:text-xs">
+                        Off-plan · Ready homes · Investments
                       </span>
                     </span>
                   </button>
                   <Button
                     type="button"
                     onClick={scrollToPortfolio}
-                    className="mt-1 h-12 w-full rounded-[16px] bg-[#102f4b] px-5 text-white shadow-[0_10px_24px_rgba(16,47,75,.17)] hover:bg-[#17496f] sm:mt-0 sm:w-auto sm:rounded-full"
+                    className="mt-1 h-12 w-full rounded-[16px] bg-[linear-gradient(120deg,#e6c188,#cfa257)] px-5 font-semibold text-[#22160a] shadow-[0_10px_28px_rgba(207,162,87,.35)] hover:brightness-105 sm:mt-0 sm:w-auto sm:rounded-full"
                   >
                     View portfolio <ArrowRight />
                   </Button>
                 </div>
 
-                <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[9px] font-medium text-[#55738b] lg:justify-start">
-                  {["RERA-aware selection", "Direct advisor access", "No pressure"].map((item) => (
-                    <span key={item} className="flex items-center gap-1.5">
-                      <span className="flex size-4 items-center justify-center rounded-full bg-white/72 text-[#18785a]">
-                        <Check className="size-2.5" />
+                <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[9px] font-medium text-white/55 lg:justify-start">
+                  {["RERA-aware selection", "Direct WhatsApp access", "Honest on the downside"].map(
+                    (item) => (
+                      <span key={item} className="flex items-center gap-1.5">
+                        <span className="flex size-4 items-center justify-center rounded-full bg-[#e0b878]/15 text-[#e0b878]">
+                          <Check className="size-2.5" />
+                        </span>
+                        {item}
                       </span>
-                      {item}
-                    </span>
-                  ))}
+                    ),
+                  )}
                 </div>
               </motion.div>
 
