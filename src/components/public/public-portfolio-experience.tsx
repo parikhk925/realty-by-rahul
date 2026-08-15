@@ -401,8 +401,33 @@ export function PublicPortfolioExperience({
       <main>
         <section className="px-2.5 pt-2.5 sm:px-4 sm:pt-4">
           <div className="relative mx-auto min-h-[760px] max-w-[1480px] overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(ellipse_at_18%_12%,rgba(224,184,120,.20),transparent_46%),radial-gradient(ellipse_at_88%_78%,rgba(64,120,190,.26),transparent_44%),linear-gradient(155deg,#0d1e33_0%,#112a44_44%,#0a1626_100%)] px-5 pb-6 pt-[104px] shadow-[0_28px_100px_rgba(10,22,38,.45)] sm:min-h-[820px] sm:rounded-[38px] sm:px-8 sm:pb-10 sm:pt-[124px] lg:min-h-[780px] lg:px-12 lg:pt-[132px]">
+            {/* Aurora: three slow, offset drifts so the ground is never static. */}
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute -left-1/4 top-[-20%] size-[720px] rounded-full bg-[radial-gradient(circle,rgba(217,169,79,.22),transparent_62%)] blur-2xl"
+              animate={reducedMotion ? undefined : { x: [0, 70, 0], y: [0, 45, 0], scale: [1, 1.1, 1] }}
+              transition={{ duration: 19, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute -right-1/4 top-[10%] size-[640px] rounded-full bg-[radial-gradient(circle,rgba(56,132,214,.26),transparent_62%)] blur-2xl"
+              animate={reducedMotion ? undefined : { x: [0, -60, 0], y: [0, 60, 0], scale: [1, 1.14, 1] }}
+              transition={{ duration: 23, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+            />
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute bottom-[-18%] left-[28%] size-[560px] rounded-full bg-[radial-gradient(circle,rgba(139,92,246,.20),transparent_64%)] blur-2xl"
+              animate={reducedMotion ? undefined : { x: [0, 45, 0], y: [0, -40, 0], scale: [1, 1.09, 1] }}
+              transition={{ duration: 26, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+            />
+
             <div className="pointer-events-none absolute -left-20 top-[30%] size-60 rounded-full border border-white/10" />
-            <div className="pointer-events-none absolute -right-32 top-14 size-[390px] rounded-full border border-[#e0b878]/15" />
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute -right-32 top-14 size-[390px] rounded-full border border-[#e0b878]/20"
+              animate={reducedMotion ? undefined : { rotate: 360 }}
+              transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+            />
             <div className="pointer-events-none absolute -left-10 bottom-[12%] size-[280px] rounded-full border border-white/[0.07]" />
             <div className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(255,255,255,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.12)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_72%)]" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-[linear-gradient(180deg,transparent,rgba(247,251,254,.10))]" />
@@ -419,10 +444,39 @@ export function PublicPortfolioExperience({
                   Gurgaon → Dubai · Since 2019
                 </div>
                 <h1 className="mx-auto mt-5 max-w-[690px] text-[44px] font-semibold leading-[.94] tracking-[-0.072em] text-white sm:mt-6 sm:text-[64px] lg:mx-0 lg:text-[76px] xl:text-[86px]">
-                  Dubai property,{" "}
-                  <span className="bg-[linear-gradient(120deg,#f0d6a8,#e0b878_60%,#c99a4e)] bg-clip-text text-transparent">
-                    without the guesswork.
-                  </span>
+                  {/* Each word rises out of its own mask, so the line assembles
+                      itself instead of simply appearing. */}
+                  {[
+                    { word: "Dubai", gold: false },
+                    { word: "property,", gold: false },
+                    { word: "without", gold: true },
+                    { word: "the", gold: true },
+                    { word: "guesswork.", gold: true },
+                  ].map(({ word, gold }, i) => (
+                    // The word gap is a margin, not whitespace: whitespace
+                    // inside an inline-block mask collapses and the line runs
+                    // together.
+                    <span
+                      key={word}
+                      className={cn(
+                        "inline-block overflow-hidden pb-[.08em] align-bottom",
+                        i < 4 && "mr-[0.24em]",
+                      )}
+                    >
+                      <motion.span
+                        className={cn(
+                          "inline-block",
+                          gold &&
+                            "bg-[linear-gradient(120deg,#f0d6a8,#e0b878_60%,#c99a4e)] bg-clip-text text-transparent",
+                        )}
+                        initial={reducedMotion ? false : { y: "108%" }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.12 * i, ease }}
+                      >
+                        {word}
+                      </motion.span>
+                    </span>
+                  ))}
                 </h1>
                 <p className="mx-auto mt-5 max-w-[540px] text-[12px] leading-6 text-white/65 sm:text-sm sm:leading-7 lg:mx-0 lg:max-w-[470px]">
                   I&apos;m Rahul Jakhar. I place off-plan launches, ready homes

@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LeadChatWidget } from "@/components/crm/lead-chat-widget";
 import { WhatsAppButton } from "@/components/crm/whatsapp-button";
+import { IntroGate } from "@/components/marketing/intro-gate";
 import "./globals.css";
 
 const inter = Inter({
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light">
           <TooltipProvider>
+            <IntroGate />
             {children}
             <WhatsAppButton />
             <LeadChatWidget />
