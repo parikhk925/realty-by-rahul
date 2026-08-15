@@ -113,7 +113,8 @@
 
 /* Phone frame for the WhatsApp mockups. */
 .kt-phone {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   border-radius: 34px;
   padding: 10px;
   background: linear-gradient(160deg, #232838, #0e111b);
@@ -360,8 +361,9 @@ body:has(.kt-root) {
 
   .kt-split-usecase {
     display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 20px;
+    /* Must be at least the phone's 300px, or the bubbles overflow the bezel. */
+    grid-template-columns: 300px 1fr;
+    gap: 22px;
   }
 
   .kt-mock-body {
