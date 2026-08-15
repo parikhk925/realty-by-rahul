@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { CrmMock, CLINIC_CRM } from "./crm-mock";
+import { EstateCrmMock } from "./estate-crm-mock";
 import "./pitch.css";
 
 export const dynamic = "force-static";
 
 const PRODUCT = "Concierge AI";
 const COMPANY = "Kaivan Tech";
-const DEMO_URL = "https://realty-by-rahul.vercel.app";
 
 /* ---------------------------------------------------------------- pieces */
 
@@ -468,19 +469,19 @@ export default function PitchPage() {
       <Section
         eyebrow="Use Case 01 — Real Estate"
         title="Property enquiries, qualified before you pick up the phone."
-        lead="Live and running today for a Dubai property advisor. The assistant qualifies the buyer, matches against real inventory, books the viewing and hands over a scored lead."
+        lead="Deployed today for a Dubai property client. The assistant qualifies the buyer, matches against live inventory, books the viewing and hands over a scored lead."
         breakBefore
       >
         <div className="grid items-start gap-8 lg:grid-cols-[300px_1fr]">
           <Phone
-            name="Realty by Rahul"
-            initials="RJ"
-            accent="linear-gradient(135deg,#d9a94f,#8f6420)"
+            name="Kaivan Estates"
+            initials="KE"
+            accent="linear-gradient(135deg,#00b8f0,#7c3aed)"
             turns={[
               { from: "out", text: "Hi, saw your listing on Instagram" },
               {
                 from: "in",
-                text: "Hey, good evening! I'm Rahul's assistant — I help buyers and investors find the right property in Dubai. To point you at the right things — are you looking to buy, invest, rent, or sell?",
+                text: "Hey, good evening! I'm the Kaivan Estates assistant — I help buyers and investors find the right property in Dubai. To point you at the right things — are you looking to buy, invest, rent, or sell?",
               },
               { from: "out", text: "Buy. 2 bed in Marina, around 3.5M, cash" },
               {
@@ -490,17 +491,19 @@ export default function PitchPage() {
               { from: "out", text: "Ready. Want to move within a month" },
               {
                 from: "in",
-                text: "Based on that, here's what I'd put in front of you from Rahul's portfolio. I've flagged this to him as a priority — he'll come back to you personally, usually within the day.",
+                text: "Based on that, here are the closest matches in our portfolio. I've flagged this to your advisor as a priority — he'll come back to you personally, usually within the day.",
               },
             ]}
           />
 
           <div className="space-y-5">
-            <Shot
-              src="/pitch/chat-widget.png"
-              alt="The assistant qualifying a buyer on the Realty by Rahul website"
-              caption="The same assistant on the website — recommending from live inventory with a match score."
-            />
+            <figure className="kt-avoid-break">
+              <EstateCrmMock />
+              <figcaption className="mt-3 text-[11px] text-[var(--kt-body)]">
+                The property desk view — every conversation scored, matched to
+                stock and ranked with a next action.
+              </figcaption>
+            </figure>
             <div className="grid gap-3 sm:grid-cols-3">
               {[
                 ["Qualifies", "Budget, area, type, layout, timeline, financing"],
@@ -569,6 +572,14 @@ export default function PitchPage() {
             </div>
           </div>
         </div>
+
+        <figure className="kt-avoid-break mt-8">
+          <CrmMock c={CLINIC_CRM} />
+          <figcaption className="mt-3 text-[11px] text-[var(--kt-body)]">
+            Clinic front-desk view — enquiries triaged and scored, appointments
+            booked, no-shows flagged for re-booking.
+          </figcaption>
+        </figure>
       </Section>
 
       {/* ------------------------------------------------- use case: marketing */}
@@ -633,11 +644,13 @@ export default function PitchPage() {
         breakBefore
       >
         <div className="space-y-6">
-          <Shot
-            src="/pitch/crm-board.png"
-            alt="Concierge AI CRM board showing scored leads"
-            caption="The live board — metrics, a hot-lead call-out, and per-lead detail with the full conversation."
-          />
+          <figure className="kt-avoid-break">
+            <CrmMock c={CLINIC_CRM} />
+            <figcaption className="mt-3 text-[11px] text-[var(--kt-body)]">
+              The same board configured for a clinic — pipeline, AI
+              qualification summary, live activity and bot performance.
+            </figcaption>
+          </figure>
           <div className="grid gap-3 sm:grid-cols-4">
             {[
               ["Scored & ranked", "Work top down. No triage meeting."],
@@ -658,37 +671,35 @@ export default function PitchPage() {
       <Section
         eyebrow="Working System"
         title="This is not a concept. It is deployed and running."
-        lead="Built for a Dubai property advisor: a public portfolio site, the assistant, the CRM and a WhatsApp integration — live, and open to walk through right now."
+        lead="A full build is live today for a Dubai property client: a public portfolio site, the assistant on every page, the CRM behind it and a WhatsApp integration. The same engine drives each of the industries in this document — only the questions, the scoring weights and the connected system change."
       >
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Shot
-            src="/pitch/site-hero.png"
-            alt="Realty by Rahul public site"
-            caption="Public site — the assistant sits on every page."
-          />
-          <Shot
-            src="/pitch/site-listing.png"
-            alt="Property detail page with documents and price check"
-            caption="Listing detail — payment plan, generated PDF, live market price check."
-          />
+        <div className="grid gap-3 sm:grid-cols-3">
+          {[
+            ["One engine", "Extraction, scoring and matching are shared. Nothing is rebuilt per industry."],
+            ["Two channels", "WhatsApp and the website widget run the same pipeline."],
+            ["Your system of record", "Leads land in the CRM here, or in the one you already use."],
+          ].map(([h, d]) => (
+            <div key={h} className="kt-card kt-avoid-break p-5">
+              <p className="text-[13px] font-semibold">{h}</p>
+              <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--kt-body)]">{d}</p>
+            </div>
+          ))}
         </div>
 
         <div className="kt-card kt-no-print mt-6 flex flex-wrap items-center justify-between gap-4 p-6">
           <div>
-            <p className="text-[13px] font-semibold">See it working</p>
+            <p className="text-[13px] font-semibold">Want to see it running?</p>
             <p className="mt-1 text-[11.5px] text-[var(--kt-body)]">
-              Open the site and talk to the assistant — the lead appears in the
-              CRM as you speak.
+              We&apos;ll walk you through a live build and configure the
+              assistant to your business.
             </p>
           </div>
           <a
-            href={DEMO_URL}
-            target="_blank"
-            rel="noreferrer"
+            href="mailto:info@kaivantech.com?subject=Concierge%20AI%20demo"
             className="rounded-full px-6 py-3 text-[12px] font-semibold text-white"
             style={{ background: "var(--kt-gradient)" }}
           >
-            Open the live demo →
+            Book a walkthrough →
           </a>
         </div>
       </Section>
