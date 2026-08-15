@@ -51,6 +51,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .kt-rule {
@@ -210,6 +211,7 @@
 
 /* Oversized monogram, set low enough that body copy still reads cleanly. */
 .kt-watermark {
+  -webkit-text-fill-color: transparent;
   position: absolute;
   pointer-events: none;
   user-select: none;
@@ -250,4 +252,16 @@
   .kt-watermark {
     opacity: 0.05;
   }
+}
+
+
+/* The deck is a white document; the site's warm page ground must not show
+   through beneath it or bleed into the printed sheet. */
+.kt-root {
+  min-height: 100vh;
+}
+
+body:has(.kt-root) {
+  background: #ffffff !important;
+  background-image: none !important;
 }
