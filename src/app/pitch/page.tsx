@@ -126,35 +126,27 @@ function Phone({
 
 export default function PitchPage() {
   return (
-    <main>
+    <main className="kt-sheet">
       {/* ---------------------------------------------------------- cover */}
-      <header className="relative overflow-hidden bg-[var(--kt-ink)] px-6 pb-20 pt-8 text-white sm:px-10 sm:pb-28 sm:pt-10">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -left-32 -top-40 size-[560px] rounded-full opacity-30 blur-3xl"
-          style={{ background: "radial-gradient(circle,#2563eb,transparent 65%)" }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-32 top-20 size-[520px] rounded-full opacity-30 blur-3xl"
-          style={{ background: "radial-gradient(circle,#ec4899,transparent 65%)" }}
-        />
+      <header className="kt-sheet px-6 pb-20 pt-0 sm:px-10 sm:pb-28">
+        <div className="kt-topline -mx-6 sm:-mx-10" />
+        <span aria-hidden className="kt-watermark kt-watermark-cover">KT</span>
 
-        <div className="relative mx-auto max-w-[1080px]">
-          <Logo dark />
+        <div className="relative mx-auto max-w-[1080px] pt-8 sm:pt-10">
+          <Logo />
 
           <div className="mt-16 sm:mt-24">
-            <span className="inline-block rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70">
+            <span className="inline-block rounded-full border border-[var(--kt-line)] bg-white px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--kt-blue)]">
               Product Proposal
             </span>
 
-            <h1 className="mt-6 max-w-[860px] text-[42px] font-bold leading-[1.02] sm:text-[74px]">
+            <h1 className="mt-6 max-w-[860px] text-[42px] font-bold leading-[1.02] text-[var(--kt-ink)] sm:text-[74px]">
               <span className="kt-grad-text">{PRODUCT}</span>
               <br />
               Never lose an enquiry again.
             </h1>
 
-            <p className="mt-6 max-w-[620px] text-[14px] leading-relaxed text-white/65 sm:text-[17px]">
+            <p className="mt-6 max-w-[620px] text-[14px] leading-relaxed text-[var(--kt-body)] sm:text-[17px]">
               An AI conversation layer that answers every enquiry the moment it
               arrives, qualifies it properly, scores it, and hands your team a
               lead that is ready to act on — on WhatsApp, your website, or both.
@@ -165,7 +157,7 @@ export default function PitchPage() {
                 (chip) => (
                   <span
                     key={chip}
-                    className="rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-2 text-[11px] font-medium text-white/80"
+                    className="rounded-full border border-[var(--kt-line)] bg-white px-3.5 py-2 text-[11px] font-medium text-[var(--kt-ink-2)]"
                   >
                     {chip}
                   </span>
@@ -173,7 +165,7 @@ export default function PitchPage() {
               )}
             </div>
 
-            <div className="mt-14 flex flex-wrap items-center gap-6 border-t border-white/10 pt-6 text-[11px] text-white/45">
+            <div className="mt-14 flex flex-wrap items-center gap-6 border-t border-[var(--kt-line)] pt-6 text-[11px] text-[var(--kt-body)]">
               <span>Prepared by {COMPANY}</span>
               <span>info@kaivantech.com</span>
               <span>kaivantech.com</span>
@@ -666,22 +658,16 @@ export default function PitchPage() {
       </Section>
 
       {/* ------------------------------------------------------------ close */}
-      <footer className="kt-page-break relative overflow-hidden bg-[var(--kt-ink)] px-6 py-20 text-white sm:px-10 sm:py-28">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-40 -top-32 size-[560px] rounded-full opacity-25 blur-3xl"
-          style={{ background: "radial-gradient(circle,#7c3aed,transparent 65%)" }}
-        />
+      <footer className="kt-page-break kt-sheet px-6 py-20 sm:px-10 sm:py-28">
+        <span aria-hidden className="kt-watermark kt-watermark-close">KT</span>
         <div className="relative mx-auto max-w-[1080px]">
-          <p className="kt-eyebrow" style={{ color: "#7fd4ff" }}>
-            Next Step
-          </p>
+          <p className="kt-eyebrow">Next Step</p>
 
-          <h2 className="mt-4 max-w-[820px] text-[40px] font-bold text-white sm:text-[64px]">
+          <h2 className="mt-4 max-w-[820px] text-[40px] font-bold text-[var(--kt-ink)] sm:text-[64px]">
             Get your <span className="kt-grad-text">quote now.</span>
           </h2>
 
-          <p className="mt-5 max-w-[560px] text-[13px] leading-relaxed text-white/60 sm:text-[15px]">
+          <p className="mt-5 max-w-[560px] text-[13px] leading-relaxed text-[var(--kt-body)] sm:text-[15px]">
             Tell us how enquiries reach you today. We&apos;ll map the flow,
             configure the assistant to your business and quote a fixed scope —
             usually within two working days.
@@ -689,34 +675,34 @@ export default function PitchPage() {
 
           {/* The contact block is the payoff of the whole document, so it is
               set as the primary visual, not a footnote. */}
-          <div className="mt-10 inline-flex flex-col gap-3 rounded-[22px] border border-white/15 bg-white/[0.06] p-7 backdrop-blur-xl sm:flex-row sm:items-center sm:gap-10">
+          <div className="mt-10 inline-flex flex-col gap-3 rounded-[22px] border border-[var(--kt-line)] bg-white p-7 shadow-[0_14px_44px_rgba(19,27,56,.08)] sm:flex-row sm:items-center sm:gap-10">
             <div>
-              <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/40">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-[var(--kt-body)]">
                 Website
               </p>
-              <p className="mt-1.5 text-[20px] font-bold text-white sm:text-[26px]">
+              <p className="mt-1.5 text-[20px] font-bold text-[var(--kt-ink)] sm:text-[26px]">
                 kaivantech.com
               </p>
             </div>
-            <div className="hidden h-12 w-px bg-white/15 sm:block" />
+            <div className="hidden h-12 w-px bg-[var(--kt-line)] sm:block" />
             <div>
-              <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/40">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-[var(--kt-body)]">
                 Email
               </p>
-              <p className="mt-1.5 text-[20px] font-bold text-white sm:text-[26px]">
+              <p className="mt-1.5 text-[20px] font-bold text-[var(--kt-ink)] sm:text-[26px]">
                 info@kaivantech.com
               </p>
             </div>
           </div>
 
-          <p className="mt-6 text-[11.5px] text-white/45">
+          <p className="mt-6 text-[11.5px] text-[var(--kt-body)]">
             Science City, Ahmedabad, Gujarat, India · AI Automation, Software
             Development &amp; Digital Experiences
           </p>
 
-          <div className="mt-14 flex flex-wrap items-center justify-between gap-6 border-t border-white/10 pt-6">
-            <Logo dark />
-            <p className="text-[10px] text-white/35">
+          <div className="mt-14 flex flex-wrap items-center justify-between gap-6 border-t border-[var(--kt-line)] pt-6">
+            <Logo />
+            <p className="text-[10px] text-[var(--kt-body)]">
               Build Smarter. Automate Faster. Scale with AI.
             </p>
           </div>

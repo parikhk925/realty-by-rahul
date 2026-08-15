@@ -25,7 +25,7 @@
     var(--kt-magenta) 100%
   );
 
-  background: var(--kt-canvas);
+  background: #ffffff;
   color: var(--kt-ink);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -36,6 +36,13 @@
 .kt-root h3 {
   letter-spacing: -0.03em;
   line-height: 1.06;
+  color: inherit;
+}
+
+/* Headings take the ink colour from their section, so the dark cover and
+   closing panel keep white type instead of inheriting near-black. */
+.kt-root section h2,
+.kt-root section h3 {
   color: var(--kt-ink);
 }
 
@@ -169,5 +176,78 @@
   .kt-shot,
   .kt-card {
     box-shadow: none;
+  }
+}
+
+
+/* ------------------------------------------------------ document surface */
+
+/*
+  The deck prints on white. Brand presence comes from a faint corner wash and
+  an oversized KT watermark rather than dark panels, which keeps ink cost low
+  and text contrast at full strength.
+*/
+.kt-sheet {
+  position: relative;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.kt-sheet .kt-sheet::before {
+  display: none;
+}
+
+.kt-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 4% 0%, rgba(0, 184, 240, 0.14), transparent 42%),
+    radial-gradient(circle at 98% 6%, rgba(236, 72, 153, 0.12), transparent 44%),
+    radial-gradient(circle at 60% 100%, rgba(124, 58, 237, 0.10), transparent 46%);
+}
+
+/* Oversized monogram, set low enough that body copy still reads cleanly. */
+.kt-watermark {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  background: var(--kt-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.06;
+}
+
+.kt-watermark-cover {
+  right: -3%;
+  top: 14%;
+  font-size: 30rem;
+}
+
+.kt-watermark-close {
+  right: -2%;
+  bottom: -8%;
+  font-size: 24rem;
+}
+
+/* A hairline of brand gradient at the top of every printed page. */
+.kt-topline {
+  height: 4px;
+  background: var(--kt-gradient);
+}
+
+@media print {
+  .kt-sheet::before {
+    /* Keep the wash, just lighter, so pages do not turn muddy in print. */
+    opacity: 0.7;
+  }
+
+  .kt-watermark {
+    opacity: 0.05;
   }
 }
