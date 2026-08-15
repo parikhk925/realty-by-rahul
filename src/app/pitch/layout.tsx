@@ -1,4 +1,13 @@
 import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
+
+/** The face used across Kaivan Tech's service sheets. */
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Concierge AI — by Kaivan Tech",
@@ -11,5 +20,5 @@ export const metadata: Metadata = {
  * document, shown to a prospect, and carries its own palette and type.
  */
 export default function PitchLayout({ children }: { children: React.ReactNode }) {
-  return <div className="kt-root">{children}</div>;
+  return <div className={`kt-root ${poppins.variable}`}>{children}</div>;
 }

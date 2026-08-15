@@ -123,6 +123,70 @@ function Phone({
 }
 
 
+/** Outline glyphs drawn to match the line icons on the service sheets. */
+const ICONS: Record<string, React.ReactNode> = {
+  clock: (
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </svg>
+  ),
+  chat: (
+    <svg viewBox="0 0 24 24">
+      <path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-5.5A8 8 0 1 1 21 12Z" />
+      <path d="M8 11h8M8 14h5" />
+    </svg>
+  ),
+  gauge: (
+    <svg viewBox="0 0 24 24">
+      <path d="M4 18a8 8 0 1 1 16 0" />
+      <path d="M12 18l4-5" />
+      <circle cx="12" cy="18" r="1.4" />
+    </svg>
+  ),
+  board: (
+    <svg viewBox="0 0 24 24">
+      <rect x="3" y="4" width="18" height="16" rx="2.5" />
+      <path d="M3 9h18M9 9v11" />
+    </svg>
+  ),
+  calendar: (
+    <svg viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="16" rx="2.5" />
+      <path d="M3 10h18M8 3v4M16 3v4" />
+      <path d="M9 15l2 2 4-4" />
+    </svg>
+  ),
+  building: (
+    <svg viewBox="0 0 24 24">
+      <path d="M4 21V6l7-3v18" />
+      <path d="M11 21h9V10l-9-4" />
+      <path d="M15 12h2M15 16h2M7 9h1M7 13h1M7 17h1" />
+    </svg>
+  ),
+  stethoscope: (
+    <svg viewBox="0 0 24 24">
+      <path d="M6 3v6a4 4 0 0 0 8 0V3" />
+      <path d="M10 13v2a5 5 0 0 0 5 5 4 4 0 0 0 4-4v-2" />
+      <circle cx="19" cy="11" r="2" />
+    </svg>
+  ),
+  megaphone: (
+    <svg viewBox="0 0 24 24">
+      <path d="M4 10v4a2 2 0 0 0 2 2h2l8 4V4L8 8H6a2 2 0 0 0-2 2Z" />
+      <path d="M19 9a3 3 0 0 1 0 6" />
+    </svg>
+  ),
+};
+
+function Icon({ name }: { name: keyof typeof ICONS }) {
+  return (
+    <span className="kt-icon" aria-hidden>
+      {ICONS[name]}
+    </span>
+  );
+}
+
 /** Soft pastel shapes plus the mark, bleeding off the edges of a sheet. */
 function SheetBackdrop({ variant = "top" }: { variant?: "top" | "bottom" }) {
   return (
@@ -232,23 +296,27 @@ export default function PitchPage() {
         <div className="grid gap-4 sm:grid-cols-3">
           {[
             {
+              icon: "gauge" as const,
               stat: "78%",
               label: "of buyers go with whoever responds first",
               note: "Speed beats polish on a first reply.",
             },
             {
+              icon: "clock" as const,
               stat: "5–10 min",
               label: "spent qualifying each enquiry manually",
               note: "Budget, area, timeline, financing — every single time.",
             },
             {
+              icon: "chat" as const,
               stat: "Most",
               label: "enquiries arrive outside working hours",
               note: "Evenings and weekends, when nobody is watching the inbox.",
             },
           ].map((item) => (
             <div key={item.stat} className="kt-card kt-avoid-break p-6">
-              <p className="kt-grad-text text-[34px] font-bold">{item.stat}</p>
+              <Icon name={item.icon} />
+              <p className="kt-grad-text mt-4 text-[34px] font-bold">{item.stat}</p>
               <p className="mt-2 text-[13px] font-semibold">{item.label}</p>
               <p className="mt-1.5 text-[11.5px] leading-relaxed text-[var(--kt-body)]">
                 {item.note}
@@ -478,15 +546,18 @@ export default function PitchPage() {
           />
 
           <div className="space-y-4">
-            {[
-              ["Triage before booking", "Distinguishes routine from urgent, and books accordingly."],
-              ["Real calendar slots", "Reads live availability per practitioner — never double-books."],
-              ["Reminders and no-show recovery", "Confirmation, reminder, and an automatic re-book offer when someone misses."],
-              ["Patient record created", "Name, contact, reason for visit and history in the system before they arrive."],
-            ].map(([h, d]) => (
-              <div key={h} className="kt-card kt-avoid-break p-5">
-                <p className="text-[13px] font-semibold">{h}</p>
-                <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--kt-body)]">{d}</p>
+            {([
+              ["stethoscope", "Triage before booking", "Distinguishes routine from urgent, and books accordingly."],
+              ["calendar", "Real calendar slots", "Reads live availability per practitioner — never double-books."],
+              ["clock", "Reminders and no-show recovery", "Confirmation, reminder, and an automatic re-book offer when someone misses."],
+              ["board", "Patient record created", "Name, contact, reason for visit and history in the system before they arrive."],
+            ] as const).map(([ic, h, d]) => (
+              <div key={h} className="kt-card kt-avoid-break flex gap-4 p-5">
+                <Icon name={ic} />
+                <div>
+                  <p className="text-[13px] font-semibold">{h}</p>
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--kt-body)]">{d}</p>
+                </div>
               </div>
             ))}
             <div className="rounded-xl bg-[var(--kt-canvas)] p-4 text-[11.5px] leading-relaxed text-[var(--kt-body)]">
@@ -530,15 +601,18 @@ export default function PitchPage() {
           />
 
           <div className="space-y-4">
-            {[
-              ["Qualifies against ICP", "Budget, industry, company size and timeline — before anyone's diary is opened."],
-              ["Books straight to calendar", "Real availability, invite sent, reminder scheduled."],
-              ["Disqualifies politely", "Out-of-budget enquiries get an honest answer instead of wasting a call."],
-              ["Attribution intact", "Campaign, ad and keyword carried into the CRM record."],
-            ].map(([h, d]) => (
-              <div key={h} className="kt-card kt-avoid-break p-5">
-                <p className="text-[13px] font-semibold">{h}</p>
-                <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--kt-body)]">{d}</p>
+            {([
+              ["gauge", "Qualifies against ICP", "Budget, industry, company size and timeline — before anyone's diary is opened."],
+              ["calendar", "Books straight to calendar", "Real availability, invite sent, reminder scheduled."],
+              ["chat", "Disqualifies politely", "Out-of-budget enquiries get an honest answer instead of wasting a call."],
+              ["megaphone", "Attribution intact", "Campaign, ad and keyword carried into the CRM record."],
+            ] as const).map(([ic, h, d]) => (
+              <div key={h} className="kt-card kt-avoid-break flex gap-4 p-5">
+                <Icon name={ic} />
+                <div>
+                  <p className="text-[13px] font-semibold">{h}</p>
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--kt-body)]">{d}</p>
+                </div>
               </div>
             ))}
             <div className="rounded-xl bg-[var(--kt-canvas)] p-4 text-[11.5px] leading-relaxed text-[var(--kt-body)]">
