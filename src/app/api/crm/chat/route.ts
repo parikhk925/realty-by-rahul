@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid message" }, { status: 400 });
     }
 
-    const result = processMessage({ visitorId, message, name });
+    const result = await processMessage({ visitorId, message, name });
 
     return NextResponse.json({
       reply: result.reply,

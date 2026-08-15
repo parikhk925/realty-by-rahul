@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LeadChatWidget } from "@/components/crm/lead-chat-widget";
+import { WhatsAppButton } from "@/components/crm/whatsapp-button";
 import "./globals.css";
 
 const inter = Inter({
@@ -30,6 +31,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light">
           <TooltipProvider>
             {children}
+            <WhatsAppButton />
             <LeadChatWidget />
           </TooltipProvider>
         </ThemeProvider>

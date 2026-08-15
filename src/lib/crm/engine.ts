@@ -159,13 +159,13 @@ function deriveNextAction(lead: Omit<Lead, "nextAction">): string {
   return "Add to nurture list — re-engage when relevant stock lands";
 }
 
-export function processMessage(input: {
+export async function processMessage(input: {
   visitorId: string;
   message: string;
   name?: string;
-}): ProcessResult {
+}): Promise<ProcessResult> {
   const now = new Date().toISOString();
-  const existing = findLeadByVisitor(input.visitorId);
+  const existing = await findLeadByVisitor(input.visitorId);
 
   const extracted = extractRequirements(input.message);
   const requirements = mergeRequirements(
@@ -238,7 +238,7 @@ export function processMessage(input: {
   };
 
   const lead: Lead = { ...base, nextAction: deriveNextAction(base) };
-  saveLead(lead);
+  await saveLead(lead);
 
   return { reply, quickReplies, recommended: lead.recommended, lead };
 }

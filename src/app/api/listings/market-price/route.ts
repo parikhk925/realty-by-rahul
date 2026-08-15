@@ -4,6 +4,7 @@ import {
   estimateMarketPrice,
   MarketDataUnavailableError,
 } from "@/lib/ai/market-price";
+import { getPropertyBySlug } from "@/lib/property-data";
 import { getPublishedProperty } from "@/lib/published-properties";
 
 export const maxDuration = 60;
@@ -18,7 +19,8 @@ const cachedEstimate = (slug: string) =>
   unstable_cache(
     async () => {
       const published = await getPublishedProperty(slug);
-      const property = published?.property;
+      // Published snapshots win; otherwise compare the portfolio's own listing.
+      const property = published?.property ?? getPropertyBySlug(slug);
       if (!property || property.status !== "Live") return undefined;
       return estimateMarketPrice(property);
     },
@@ -41,7 +43,8 @@ export async function GET(request: Request) {
   try {
     // Checked outside the cache: a draft that gets published should work
     // immediately, not after the estimate's 24 hour window has rolled over.
-    const property = (await getPublishedProperty(slug))?.property;
+    const property =
+      (await getPublishedProperty(slug))?.property ?? getPropertyBySlug(slug);
     if (!property) {
       return Response.json(
         {

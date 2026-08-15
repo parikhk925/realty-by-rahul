@@ -1,4 +1,4 @@
-import { getBrochureUrl } from "@/lib/property-data";
+import { getBrochureUrl, getPropertyBySlug } from "@/lib/property-data";
 import { getPublishedProperty } from "@/lib/published-properties";
 
 export const dynamic = "force-dynamic";
@@ -16,12 +16,13 @@ export const dynamic = "force-dynamic";
  * brochure and must reach the buyer exactly as supplied.
  */
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
   const published = await getPublishedProperty(slug);
-  const property = published?.property;
+  // Published snapshots win; otherwise use the portfolio's own inventory.
+  const property = published?.property ?? getPropertyBySlug(slug);
 
   // Drafts are not public inventory, so their brochures are not either.
   if (!property || property.status !== "Live") {
@@ -31,14 +32,20 @@ export async function GET(
   const source = getBrochureUrl(property);
   // Only ever proxy our own storage — this endpoint takes a slug, not a URL,
   // but the stored value should still be checked before the server fetches it.
-  if (
-    !source ||
-    !/^https:\/\/[a-z0-9]+\.public\.blob\.vercel-storage\.com\//i.test(source)
-  ) {
+  // Either our own Blob storage, or a file shipped with the site under
+  // /docs. Both are ours; anything else is not fetched.
+  const isStored = Boolean(source) && /^https:\/\/[a-z0-9]+\.public\.blob\.vercel-storage\.com\//i.test(source!);
+  const isLocalDoc = Boolean(source) && /^\/docs\/[\w.-]+\.pdf$/i.test(source!);
+  if (!isStored && !isLocalDoc) {
     return new Response("Not found", { status: 404 });
   }
 
-  const upstream = await fetch(source, {
+  // Narrowed by the isStored / isLocalDoc guard above.
+  const resolved = source as string;
+  const target = isLocalDoc
+    ? new URL(resolved, request.url).toString()
+    : resolved;
+  const upstream = await fetch(target, {
     signal: AbortSignal.timeout(20_000),
   }).catch(() => undefined);
   if (!upstream?.ok || !upstream.body) {

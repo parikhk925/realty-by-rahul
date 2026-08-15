@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     if (alreadyHandled(message.messageId)) continue;
 
     try {
-      const result = processMessage({
+      const result = await processMessage({
         // The WhatsApp number is the stable identity, so a returning buyer
         // keeps everything captured previously.
         visitorId: `wa-${message.from}`,

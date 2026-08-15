@@ -169,8 +169,8 @@ function LeadCard({ lead }: { lead: Lead }) {
   );
 }
 
-export default function CrmPage() {
-  const leads = listLeads();
+export default async function CrmPage() {
+  const leads = await listLeads();
   const hot = leads.filter((lead) => lead.temperature === "hot");
   const viewings = leads.filter((lead) => lead.viewingRequested);
 
