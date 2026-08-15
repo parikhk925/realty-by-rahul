@@ -265,3 +265,25 @@ body:has(.kt-root) {
   background: #ffffff !important;
   background-image: none !important;
 }
+
+
+/*
+  Chrome strokes the clip bounding box of background-clip:text when printing,
+  which shows as a rectangle around every gradient headline in the PDF. The
+  web version keeps the gradient; print falls back to a solid brand colour,
+  which is the one treatment guaranteed to render clean.
+*/
+@media print {
+  .kt-grad-text {
+    background: none !important;
+    color: var(--kt-violet) !important;
+    -webkit-text-fill-color: var(--kt-violet) !important;
+  }
+
+  .kt-watermark {
+    background: none !important;
+    color: rgba(124, 58, 237, 0.05) !important;
+    -webkit-text-fill-color: rgba(124, 58, 237, 0.05) !important;
+    opacity: 1;
+  }
+}
