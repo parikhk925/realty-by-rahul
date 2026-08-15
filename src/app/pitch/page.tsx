@@ -122,6 +122,51 @@ function Phone({
   );
 }
 
+
+/** Soft pastel shapes plus the mark, bleeding off the edges of a sheet. */
+function SheetBackdrop({ variant = "top" }: { variant?: "top" | "bottom" }) {
+  return (
+    <>
+      <span
+        aria-hidden
+        className="kt-blob kt-blob-cyan"
+        style={
+          variant === "top"
+            ? { width: 520, height: 520, left: -170, top: -190 }
+            : { width: 420, height: 420, left: -150, bottom: -160 }
+        }
+      />
+      <span
+        aria-hidden
+        className="kt-blob kt-blob-pink"
+        style={
+          variant === "top"
+            ? { width: 560, height: 560, right: -210, top: 40 }
+            : { width: 620, height: 620, right: -230, bottom: -220 }
+        }
+      />
+      <span
+        aria-hidden
+        className="kt-blob kt-blob-violet"
+        style={{ width: 380, height: 380, right: "24%", bottom: -180 }}
+      />
+      <Image
+        src="/pitch/kaivan-logo.jpeg"
+        alt=""
+        aria-hidden
+        width={620}
+        height={620}
+        className="kt-logo-watermark"
+        style={
+          variant === "top"
+            ? { right: "-8%", top: "18%", width: 620, height: "auto" }
+            : { right: "-6%", bottom: "-6%", width: 540, height: "auto" }
+        }
+      />
+    </>
+  );
+}
+
 /* ------------------------------------------------------------------ page */
 
 export default function PitchPage() {
@@ -130,10 +175,13 @@ export default function PitchPage() {
       {/* ---------------------------------------------------------- cover */}
       <header className="kt-sheet px-6 pb-20 pt-0 sm:px-10 sm:pb-28">
         <div className="kt-topline -mx-6 sm:-mx-10" />
-        <span aria-hidden className="kt-watermark kt-watermark-cover">KT</span>
+        <SheetBackdrop />
 
         <div className="relative mx-auto max-w-[1080px] pt-8 sm:pt-10">
-          <Logo />
+          <div className="flex items-start justify-between gap-6">
+            <Logo />
+            <span className="kt-wordmark hidden sm:block">KAIVAN TECH</span>
+          </div>
 
           <div className="mt-16 sm:mt-24">
             <span className="inline-block rounded-full border border-[var(--kt-line)] bg-white px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--kt-blue)]">
@@ -659,7 +707,7 @@ export default function PitchPage() {
 
       {/* ------------------------------------------------------------ close */}
       <footer className="kt-page-break kt-sheet px-6 py-20 sm:px-10 sm:py-28">
-        <span aria-hidden className="kt-watermark kt-watermark-close">KT</span>
+        <SheetBackdrop variant="bottom" />
         <div className="relative mx-auto max-w-[1080px]">
           <p className="kt-eyebrow">Next Step</p>
 

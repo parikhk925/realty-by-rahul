@@ -198,44 +198,57 @@
   display: none;
 }
 
-.kt-sheet::before {
-  content: "";
+/*
+  House style: large, very soft pastel shapes bleeding off the edges. Kept
+  low-contrast so black body copy stays fully legible on top.
+*/
+.kt-blob {
   position: absolute;
-  inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 4% 0%, rgba(0, 184, 240, 0.14), transparent 42%),
-    radial-gradient(circle at 98% 6%, rgba(236, 72, 153, 0.12), transparent 44%),
-    radial-gradient(circle at 60% 100%, rgba(124, 58, 237, 0.10), transparent 46%);
+  border-radius: 999px;
+  filter: blur(10px);
 }
 
-/* Oversized monogram, set low enough that body copy still reads cleanly. */
-.kt-watermark {
-  -webkit-text-fill-color: transparent;
+.kt-blob-cyan {
+  background: radial-gradient(circle, rgba(0, 184, 240, 0.16), transparent 68%);
+}
+
+.kt-blob-pink {
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.14), transparent 68%);
+}
+
+.kt-blob-violet {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.12), transparent 68%);
+}
+
+/* The mark itself, sitting far back behind the page. */
+.kt-logo-watermark {
   position: absolute;
   pointer-events: none;
   user-select: none;
-  font-weight: 800;
-  letter-spacing: -0.06em;
-  line-height: 1;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+}
+
+/* Short gradient dash that sits above each section label. */
+.kt-eyebrow::before {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 3px;
+  border-radius: 999px;
   background: var(--kt-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  opacity: 0.06;
+  margin-bottom: 10px;
 }
 
-.kt-watermark-cover {
-  right: -3%;
-  top: 14%;
-  font-size: 30rem;
+/* Letterspaced wordmark used top-right, as on the service sheets. */
+.kt-wordmark {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: var(--kt-ink);
 }
 
-.kt-watermark-close {
-  right: -2%;
-  bottom: -8%;
-  font-size: 24rem;
-}
 
 /* A hairline of brand gradient at the top of every printed page. */
 .kt-topline {
@@ -243,23 +256,6 @@
   background: var(--kt-gradient);
 }
 
-@media print {
-  .kt-sheet::before {
-    /* Keep the wash, just lighter, so pages do not turn muddy in print. */
-    opacity: 0.7;
-  }
-
-  .kt-watermark {
-    opacity: 0.05;
-  }
-}
-
-
-/* The deck is a white document; the site's warm page ground must not show
-   through beneath it or bleed into the printed sheet. */
-.kt-root {
-  min-height: 100vh;
-}
 
 body:has(.kt-root) {
   background: #ffffff !important;
@@ -280,10 +276,4 @@ body:has(.kt-root) {
     -webkit-text-fill-color: var(--kt-violet) !important;
   }
 
-  .kt-watermark {
-    background: none !important;
-    color: rgba(124, 58, 237, 0.05) !important;
-    -webkit-text-fill-color: rgba(124, 58, 237, 0.05) !important;
-    opacity: 1;
-  }
-}
+  
