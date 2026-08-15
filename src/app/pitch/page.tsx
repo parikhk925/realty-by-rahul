@@ -383,7 +383,7 @@ export default function PitchPage() {
         title="Why one lead is worth calling before another."
         lead="The score is arithmetic, not opinion. Your team can see exactly where every point came from — and you can change the weights whenever your market changes."
       >
-        <div className="grid gap-6 lg:grid-cols-[1.05fr_1fr]">
+        <div className="kt-split-detail grid gap-6 lg:grid-cols-[1.05fr_1fr]">
           <div className="kt-card kt-avoid-break p-6">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--kt-body)]">
               Worked example
@@ -472,7 +472,7 @@ export default function PitchPage() {
         lead="Deployed today for a Dubai property client. The assistant qualifies the buyer, matches against live inventory, books the viewing and hands over a scored lead."
         breakBefore
       >
-        <div className="grid items-start gap-8 lg:grid-cols-[300px_1fr]">
+        <div className="kt-split-usecase grid items-start gap-8 lg:grid-cols-[300px_1fr]">
           <Phone
             name="Kaivan Estates"
             initials="KE"
@@ -526,7 +526,7 @@ export default function PitchPage() {
         title="Appointments booked while the clinic sleeps."
         lead="Patients message at 11pm. The assistant triages the reason for the visit, offers real slots, books the appointment and sends the reminder — without a receptionist in the loop."
       >
-        <div className="grid items-start gap-8 lg:grid-cols-[300px_1fr]">
+        <div className="kt-split-usecase grid items-start gap-8 lg:grid-cols-[300px_1fr]">
           <Phone
             name="Sunrise Dental Clinic"
             initials="SD"
@@ -589,7 +589,7 @@ export default function PitchPage() {
         lead="Route your paid traffic into a conversation instead of a contact form. The assistant qualifies against your ideal-client criteria and books the discovery call straight into the calendar."
         breakBefore
       >
-        <div className="grid items-start gap-8 lg:grid-cols-[300px_1fr]">
+        <div className="kt-split-usecase grid items-start gap-8 lg:grid-cols-[300px_1fr]">
           <Phone
             name="Northwind Digital"
             initials="ND"

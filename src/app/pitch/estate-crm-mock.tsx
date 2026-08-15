@@ -156,7 +156,7 @@ export function EstateCrmMock() {
             ))}
           </div>
 
-          <div className="mt-2 grid gap-2 lg:grid-cols-[1fr_140px]">
+          <div className="kt-mock-body mt-2 grid gap-2 lg:grid-cols-[1fr_140px]">
             <div className="min-w-0 space-y-2">
               {/* pipeline table */}
               <div className="rounded-[10px] border border-[#eef0f6] bg-white p-2">
@@ -229,7 +229,7 @@ export function EstateCrmMock() {
               </div>
 
               {/* lead detail + matched properties */}
-              <div className="grid gap-2 lg:grid-cols-[1fr_150px]">
+              <div className="kt-mock-detail grid gap-2 lg:grid-cols-[1fr_150px]">
                 <div className="rounded-[10px] border border-[#eef0f6] bg-white p-2">
                   <div className="flex items-center gap-1.5">
                     <span className="grid size-6 place-items-center rounded-full bg-[#ede9fe] text-[7px] font-bold text-[#7c3aed]">
@@ -362,7 +362,7 @@ export function EstateCrmMock() {
             </div>
 
             {/* ------------------------------------------------ right rail */}
-            <div className="hidden space-y-2 lg:block">
+            <div className="kt-mock-rail hidden space-y-2 lg:block">
               <div className="rounded-[10px] border border-[#eef0f6] bg-white p-2">
                 <p className="text-[7.5px] font-bold">Live Activity Feed</p>
                 <div className="mt-1.5 space-y-1.5">

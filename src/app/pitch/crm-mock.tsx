@@ -115,7 +115,7 @@ export function CrmMock({ c }: { c: CrmMockConfig }) {
             ))}
           </div>
 
-          <div className="mt-2.5 grid gap-2.5 lg:grid-cols-[1fr_150px]">
+          <div className="kt-mock-body mt-2.5 grid gap-2.5 lg:grid-cols-[1fr_150px]">
             <div>
               {/* pipeline */}
               <div className="rounded-[10px] border border-[#eef0f6] p-2">
@@ -217,7 +217,7 @@ export function CrmMock({ c }: { c: CrmMockConfig }) {
             </div>
 
             {/* ------------------------------------------------ right rail */}
-            <div className="hidden space-y-2 lg:block">
+            <div className="kt-mock-rail hidden space-y-2 lg:block">
               <div className="rounded-[10px] border border-[#eef0f6] p-2">
                 <p className="text-[8px] font-bold">Live Activity</p>
                 <div className="mt-1.5 space-y-1.5">

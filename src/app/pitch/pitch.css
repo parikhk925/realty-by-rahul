@@ -342,3 +342,41 @@ body:has(.kt-root) {
   }
 
   }
+
+
+/*
+  An A4 page is roughly 700 CSS px wide, which sits below Tailwind's lg
+  breakpoint. Left alone, every two-column layout collapses to a single
+  stacked column when printed — which doubled several sections onto a second
+  near-empty page, and silently dropped the `hidden lg:block` side rails out
+  of both CRM mockups entirely.
+*/
+@media print {
+  .kt-split-detail {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 18px;
+  }
+
+  .kt-split-usecase {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+  }
+
+  .kt-mock-body {
+    display: grid;
+    grid-template-columns: 1fr 140px;
+    gap: 8px;
+  }
+
+  .kt-mock-detail {
+    display: grid;
+    grid-template-columns: 1fr 150px;
+    gap: 8px;
+  }
+
+  .kt-mock-rail {
+    display: block !important;
+  }
+}
