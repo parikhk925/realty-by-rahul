@@ -101,7 +101,7 @@ export function MarketPriceCard({
 
   return (
     <section className="mx-4 mt-8 sm:mx-0">
-      <div className="relative overflow-hidden rounded-[28px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,.86),rgba(238,243,255,.72))] p-5 shadow-[0_20px_58px_rgba(43,75,139,.12)] backdrop-blur-2xl sm:p-7">
+      <div className="relative overflow-hidden rounded-[28px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,.86),rgba(238,243,255,.72))] p-5 shadow-[0_20px_58px_rgba(74,62,40,.12)] backdrop-blur-2xl sm:p-7">
         <div className="pointer-events-none absolute -right-16 -top-20 size-64 rounded-full bg-[radial-gradient(circle,rgba(207,229,255,.85),transparent_68%)]" />
         <div className="pointer-events-none absolute -bottom-24 -left-12 size-56 rounded-full bg-[radial-gradient(circle,rgba(255,236,205,.8),transparent_68%)]" />
 
@@ -141,7 +141,7 @@ export function MarketPriceCard({
               type="button"
               onClick={() => (mode === "original" ? showOriginal() : void run())}
               disabled={pending}
-              className="h-12 w-full rounded-2xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-[13px] shadow-[0_16px_36px_rgba(35,96,221,.3)] transition-transform hover:-translate-y-0.5 sm:w-auto sm:px-7"
+              className="h-12 w-full rounded-2xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-[13px] shadow-[0_16px_36px_rgba(184,134,47,.3)] transition-transform hover:-translate-y-0.5 sm:w-auto sm:px-7"
             >
               {pending ? (
                 <LoaderCircle className="animate-spin" />
@@ -163,7 +163,7 @@ export function MarketPriceCard({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-5 rounded-2xl border border-white/80 bg-white/72 p-4 shadow-[0_14px_38px_rgba(50,81,142,.1)] backdrop-blur-xl sm:p-5"
+                className="mt-5 rounded-2xl border border-white/80 bg-white/72 p-4 shadow-[0_14px_38px_rgba(74,62,40,.1)] backdrop-blur-xl sm:p-5"
               >
                 {mode === "original" && !hasOriginal ? (
                   <>

@@ -44,10 +44,10 @@ export default async function ProfilePage() {
         The trust layer shown across every project and customer collection.
       </p>
 
-      <section className="sunrise-surface relative mt-6 overflow-hidden rounded-[32px] border border-white/80 p-5 shadow-[0_24px_70px_rgba(46,80,147,.12)] sm:p-8">
+      <section className="sunrise-surface relative mt-6 overflow-hidden rounded-[32px] border border-white/80 p-5 shadow-[0_24px_70px_rgba(74,62,40,.12)] sm:p-8">
         <div className="pointer-events-none absolute -right-16 -top-16 size-64 rounded-full bg-sky-200/50 blur-3xl" />
         <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center">
-          <div className="relative mx-auto size-36 shrink-0 overflow-hidden rounded-[32px] border-4 border-white shadow-[0_20px_45px_rgba(52,80,135,.2)] sm:mx-0 sm:size-44">
+          <div className="relative mx-auto size-36 shrink-0 overflow-hidden rounded-[32px] border-4 border-white shadow-[0_20px_45px_rgba(74,62,40,.2)] sm:mx-0 sm:size-44">
             <Image
               src={profile.avatarUrl ?? "/rahul-profile.png"}
               alt={profile.fullName}

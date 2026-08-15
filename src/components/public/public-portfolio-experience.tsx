@@ -106,7 +106,7 @@ function PropertyDeck({ properties }: { properties: Property[] }) {
                 y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
               }
         }
-        className="absolute left-[2%] top-[6%] z-10 h-[71%] w-[69%] overflow-hidden rounded-[30px] border border-white/80 bg-white/30 shadow-[0_35px_90px_rgba(31,76,133,.23)] backdrop-blur-sm sm:rounded-[38px] lg:left-[1%] lg:h-[74%]"
+        className="absolute left-[2%] top-[6%] z-10 h-[71%] w-[69%] overflow-hidden rounded-[30px] border border-white/80 bg-white/30 shadow-[0_35px_90px_rgba(72,60,38,.23)] backdrop-blur-sm sm:rounded-[38px] lg:left-[1%] lg:h-[74%]"
       >
         <Image
           src={primary.images[0]}
@@ -135,17 +135,17 @@ function PropertyDeck({ properties }: { properties: Property[] }) {
         initial={{ opacity: 0, scale: 0.88, x: 16 }}
         animate={{ opacity: 1, scale: 1, x: 0 }}
         transition={{ duration: 0.7, delay: 0.48, ease }}
-        className="absolute bottom-[5%] right-[2%] z-20 w-[61%] rounded-[22px] border border-white/85 bg-white/72 p-3 shadow-[0_22px_65px_rgba(27,74,132,.2)] backdrop-blur-2xl sm:bottom-[7%] sm:rounded-[26px] sm:p-4 lg:right-0"
+        className="absolute bottom-[5%] right-[2%] z-20 w-[61%] rounded-[22px] border border-white/85 bg-white/72 p-3 shadow-[0_22px_65px_rgba(70,58,37,.2)] backdrop-blur-2xl sm:bottom-[7%] sm:rounded-[26px] sm:p-4 lg:right-0"
       >
         <div className="flex items-center gap-2">
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#1668e8] text-white shadow-[0_8px_18px_rgba(22,104,232,.28)]">
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#b8862f] text-white shadow-[0_8px_18px_rgba(184,134,47,.28)]">
             <Sparkles className="size-3.5" />
           </span>
           <div className="min-w-0">
-            <p className="text-[9px] font-semibold text-[#102846] sm:text-xs">
+            <p className="text-[9px] font-semibold text-[#17212e] sm:text-xs">
               Private shortlist
             </p>
-            <p className="truncate text-[8px] text-[#56708c] sm:text-[10px]">
+            <p className="truncate text-[8px] text-[#6f6a5f] sm:text-[10px]">
               Matched to your requirements
             </p>
           </div>
@@ -154,7 +154,7 @@ function PropertyDeck({ properties }: { properties: Property[] }) {
           {["Verified", "Curated", "Direct"].map((item) => (
             <span
               key={item}
-              className="rounded-full border border-white/80 bg-white/65 px-1.5 py-1 text-center text-[7px] font-semibold text-[#335570] sm:text-[9px]"
+              className="rounded-full border border-white/80 bg-white/65 px-1.5 py-1 text-center text-[7px] font-semibold text-[#5d5749] sm:text-[9px]"
             >
               {item}
             </span>
@@ -166,7 +166,7 @@ function PropertyDeck({ properties }: { properties: Property[] }) {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, delay: 0.65, ease }}
-        className="absolute left-[1%] top-[69%] z-20 flex items-center gap-2 rounded-full border border-white/85 bg-white/72 py-2 pl-2 pr-3 shadow-[0_16px_45px_rgba(25,70,126,.16)] backdrop-blur-xl sm:top-[73%]"
+        className="absolute left-[1%] top-[69%] z-20 flex items-center gap-2 rounded-full border border-white/85 bg-white/72 py-2 pl-2 pr-3 shadow-[0_16px_45px_rgba(70,58,37,.16)] backdrop-blur-xl sm:top-[73%]"
       >
         <div className="relative size-8 overflow-hidden rounded-full ring-2 ring-white sm:size-10">
           <Image
@@ -178,10 +178,10 @@ function PropertyDeck({ properties }: { properties: Property[] }) {
           />
         </div>
         <div>
-          <p className="text-[8px] font-semibold text-[#102846] sm:text-[10px]">
+          <p className="text-[8px] font-semibold text-[#17212e] sm:text-[10px]">
             Rahul
           </p>
-          <p className="text-[7px] text-[#5e7690] sm:text-[9px]">
+          <p className="text-[7px] text-[#6f6a5f] sm:text-[9px]">
             Dubai property advisor
           </p>
         </div>
@@ -200,11 +200,11 @@ function PortfolioPropertyCard({ property }: { property: Property }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ duration: 0.45, ease }}
-      className="portfolio-render group overflow-hidden rounded-[28px] border border-[#dce9f4] bg-white shadow-[0_16px_50px_rgba(37,77,119,.08)] transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-2 hover:border-[#a9cdee] hover:shadow-[0_34px_84px_rgba(24,66,112,.22)] sm:rounded-[32px]"
+      className="portfolio-render group overflow-hidden rounded-[28px] border border-[#e9e1d3] bg-white shadow-[0_16px_50px_rgba(74,62,40,.08)] transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-2 hover:border-[#d6bf94] hover:shadow-[0_34px_84px_rgba(64,53,34,.22)] sm:rounded-[32px]"
     >
       <Link
         href={`/listing/${encodeURIComponent(property.slug)}`}
-        className="block focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#2d82eb]/20"
+        className="block focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c9a227]/20"
         aria-label={`Open ${property.title}`}
       >
         <div className="relative aspect-[1.23/1] min-h-[250px] overflow-hidden sm:aspect-[1.3/1]">
@@ -217,7 +217,7 @@ function PortfolioPropertyCard({ property }: { property: Property }) {
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,37,66,.02),transparent_45%,rgba(9,30,54,.74))]" />
           <div className="absolute inset-x-3 top-3 flex flex-wrap gap-1.5">
-            <Badge className="border-white/45 bg-white/78 text-[#123454] shadow-sm backdrop-blur-xl hover:bg-white/90">
+            <Badge className="border-white/45 bg-white/78 text-[#1b2634] shadow-sm backdrop-blur-xl hover:bg-white/90">
               {category}
             </Badge>
             <Badge
@@ -225,25 +225,25 @@ function PortfolioPropertyCard({ property }: { property: Property }) {
                 "border-white/45 text-white shadow-sm backdrop-blur-xl",
                 property.commissionCovered
                   ? "bg-emerald-600/82"
-                  : "bg-[#163b5c]/72",
+                  : "bg-[#1b2634]/72",
               )}
             >
               <HandCoins className="size-3" />
               {property.commissionCovered ? "Covered" : "Not covered"}
             </Badge>
             {property.postHandoverPaymentPlan && (
-              <Badge className="border-white/60 bg-white/88 text-[#123454] shadow-sm backdrop-blur-xl hover:bg-white">
+              <Badge className="border-white/60 bg-white/88 text-[#1b2634] shadow-sm backdrop-blur-xl hover:bg-white">
                 <CalendarClock className="size-3" />
                 Post-handover plan
               </Badge>
             )}
             {property.reraVerified && (
-              <Badge className="border-white/45 bg-[#eafff5]/88 text-[#087a53] shadow-sm backdrop-blur-xl hover:bg-[#eafff5]">
+              <Badge className="border-white/45 bg-[#eafff5]/88 text-[#6f7a2e] shadow-sm backdrop-blur-xl hover:bg-[#eafff5]">
                 <ShieldCheck className="size-3" /> Verified
               </Badge>
             )}
           </div>
-          <span className="absolute right-3 top-3 flex size-9 items-center justify-center rounded-full border border-white/60 bg-white/78 text-[#123454] shadow-sm backdrop-blur-xl transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105">
+          <span className="absolute right-3 top-3 flex size-9 items-center justify-center rounded-full border border-white/60 bg-white/78 text-[#1b2634] shadow-sm backdrop-blur-xl transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105">
             <ArrowUpRight className="size-4" />
           </span>
           <div className="absolute inset-x-4 bottom-4 text-white">
@@ -281,8 +281,8 @@ function PortfolioPropertyCard({ property }: { property: Property }) {
             },
           ].map((detail) => (
             <div key={detail.label} className="min-w-0 px-2 text-center">
-              <detail.icon className="mx-auto size-3.5 text-[#1764c0]" />
-              <p className="mt-1.5 text-[8px] text-[#526d84]">{detail.label}</p>
+              <detail.icon className="mx-auto size-3.5 text-[#8f6420]" />
+              <p className="mt-1.5 text-[8px] text-[#6b6559]">{detail.label}</p>
               <p className="mt-0.5 truncate text-[9px] font-semibold text-[#173650]">
                 {detail.value}
               </p>
@@ -291,7 +291,7 @@ function PortfolioPropertyCard({ property }: { property: Property }) {
         </div>
         <Button
           asChild
-          className="mt-4 h-12 w-full rounded-[15px] bg-[#102f4b] px-4 text-white shadow-[0_12px_28px_rgba(16,47,75,.15)] hover:bg-[#17496f]"
+          className="mt-4 h-12 w-full rounded-[15px] bg-[#17212e] px-4 text-white shadow-[0_12px_28px_rgba(23,33,46,.15)] hover:bg-[#2a3543]"
         >
           <Link href={`/listing/${encodeURIComponent(property.slug)}`}>
             Explore residence
@@ -368,7 +368,7 @@ export function PublicPortfolioExperience({
   };
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#f7fbfe] pb-28 text-[#10243a] sm:pb-0">
+    <div className="min-h-screen overflow-x-clip bg-[#faf7f2] pb-28 text-[#17212e] sm:pb-0">
       <header className="absolute inset-x-0 top-0 z-50">
         <div className="mx-auto flex h-[76px] max-w-[1320px] items-center gap-3 px-5 sm:h-[86px] sm:px-8 lg:px-12">
           <BrandMark className="min-w-0 flex-1 text-white" />
@@ -389,7 +389,7 @@ export function PublicPortfolioExperience({
           </Link>
           <Button
             asChild
-            className="hidden h-10 rounded-full bg-[linear-gradient(120deg,#e6c188,#cfa257)] px-5 font-semibold text-[#22160a] shadow-[0_10px_24px_rgba(207,162,87,.3)] hover:brightness-105 sm:inline-flex"
+            className="btn-gold hidden h-10 rounded-full px-5 font-semibold sm:inline-flex"
           >
             <a href={whatsappUrl} target="_blank" rel="noreferrer">
               Ask Rahul <ArrowUpRight />
@@ -400,7 +400,7 @@ export function PublicPortfolioExperience({
 
       <main>
         <section className="px-2.5 pt-2.5 sm:px-4 sm:pt-4">
-          <div className="relative mx-auto min-h-[760px] max-w-[1480px] overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(ellipse_at_18%_12%,rgba(224,184,120,.20),transparent_46%),radial-gradient(ellipse_at_88%_78%,rgba(64,120,190,.26),transparent_44%),linear-gradient(155deg,#0d1e33_0%,#112a44_44%,#0a1626_100%)] px-5 pb-6 pt-[104px] shadow-[0_28px_100px_rgba(10,22,38,.45)] sm:min-h-[820px] sm:rounded-[38px] sm:px-8 sm:pb-10 sm:pt-[124px] lg:min-h-[780px] lg:px-12 lg:pt-[132px]">
+          <div className="grain relative mx-auto min-h-[760px] max-w-[1480px] overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(ellipse_at_18%_12%,rgba(224,184,120,.20),transparent_46%),radial-gradient(ellipse_at_88%_78%,rgba(64,120,190,.26),transparent_44%),linear-gradient(155deg,#0d1e33_0%,#112a44_44%,#0a1626_100%)] px-5 pb-6 pt-[104px] shadow-[0_28px_100px_rgba(10,22,38,.45)] sm:min-h-[820px] sm:rounded-[38px] sm:px-8 sm:pb-10 sm:pt-[124px] lg:min-h-[780px] lg:px-12 lg:pt-[132px]">
             {/* Aurora: three slow, offset drifts so the ground is never static. */}
             <motion.div
               aria-hidden
@@ -443,7 +443,7 @@ export function PublicPortfolioExperience({
                   <Sparkles className="size-3 text-[#e0b878]" />
                   Gurgaon → Dubai · Since 2019
                 </div>
-                <h1 className="mx-auto mt-5 max-w-[690px] text-[44px] font-semibold leading-[.94] tracking-[-0.072em] text-white sm:mt-6 sm:text-[64px] lg:mx-0 lg:text-[76px] xl:text-[86px]">
+                <h1 className="font-display mx-auto mt-5 max-w-[720px] text-[44px] font-semibold leading-[.96] text-white sm:mt-6 sm:text-[64px] lg:mx-0 lg:text-[78px] xl:text-[88px]">
                   {/* Each word rises out of its own mask, so the line assembles
                       itself instead of simply appearing. */}
                   {[
@@ -505,7 +505,7 @@ export function PublicPortfolioExperience({
                   <Button
                     type="button"
                     onClick={scrollToPortfolio}
-                    className="mt-1 h-12 w-full rounded-[16px] bg-[linear-gradient(120deg,#e6c188,#cfa257)] px-5 font-semibold text-[#22160a] shadow-[0_10px_28px_rgba(207,162,87,.35)] hover:brightness-105 sm:mt-0 sm:w-auto sm:rounded-full"
+                    className="btn-gold mt-1 h-12 w-full rounded-[16px] px-6 font-semibold sm:mt-0 sm:w-auto sm:rounded-full"
                   >
                     View portfolio <ArrowRight />
                   </Button>
@@ -531,17 +531,17 @@ export function PublicPortfolioExperience({
         </section>
 
         <section className="mx-auto max-w-[1180px] px-5 py-8 sm:px-8 sm:py-12">
-          <div className="grid grid-cols-3 divide-x divide-[#dce9f4] overflow-hidden rounded-[24px] border border-[#dce9f4] bg-white/70 shadow-[0_16px_50px_rgba(37,77,119,.07)] backdrop-blur-xl sm:rounded-[28px]">
+          <div className="grid grid-cols-3 divide-x divide-[#e9e1d3] overflow-hidden rounded-[24px] border border-[#e9e1d3] bg-white/70 shadow-[0_16px_50px_rgba(74,62,40,.07)] backdrop-blur-xl sm:rounded-[28px]">
             {[
               ["Private", "One-to-one guidance"],
               [String(liveProperties.length), "Curated opportunities"],
               ["Dubai", "Market focused"],
             ].map(([value, label]) => (
               <div key={label} className="px-2 py-5 text-center sm:py-7">
-                <p className="bg-[linear-gradient(135deg,#153a58,#1668e8)] bg-clip-text text-xl font-semibold tracking-[-0.04em] text-transparent sm:text-3xl">
+                <p className="font-display text-gold text-2xl font-semibold sm:text-4xl">
                   {value}
                 </p>
-                <p className="mt-1.5 text-[8px] uppercase tracking-[0.14em] text-[#526d84] sm:text-[10px]">
+                <p className="mt-1.5 text-[8px] uppercase tracking-[0.14em] text-[#6b6559] sm:text-[10px]">
                   {label}
                 </p>
               </div>
@@ -553,21 +553,21 @@ export function PublicPortfolioExperience({
           <div className="mx-auto max-w-[1180px]">
             <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
               <div>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#1764c0]">
+                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#8f6420]">
                   Rahul&apos;s portfolio
                 </p>
-                <h2 className="mt-2 max-w-[600px] text-[34px] font-semibold leading-[1] tracking-[-0.06em] text-[#102f4b] sm:text-5xl">
+                <h2 className="font-display mt-2.5 max-w-[620px] text-[34px] font-semibold leading-[1.02] text-[#17212e] sm:text-[46px]">
                   A sharper way to find your place in Dubai.
                 </h2>
               </div>
-              <p className="max-w-[360px] text-[10px] leading-5 text-[#506b82] sm:text-xs sm:leading-6">
+              <p className="max-w-[360px] text-[10px] leading-5 text-[#6b6559] sm:text-xs sm:leading-6">
                 Filter a focused collection of launches, resale homes and
                 rentals. Every detail page is built for fast, confident review.
               </p>
             </div>
 
-            <div className="sticky top-2 z-40 mt-7 rounded-[24px] border border-[#dce9f4]/90 bg-white/88 p-2.5 shadow-[0_18px_50px_rgba(37,77,119,.11)] backdrop-blur-2xl sm:top-3 sm:rounded-[28px] sm:p-3">
-              <div className="grid grid-cols-4 rounded-[18px] bg-[#eff6fb] p-1">
+            <div className="sticky top-2 z-40 mt-7 rounded-[24px] border border-[#e9e1d3]/90 bg-white/88 p-2.5 shadow-[0_18px_50px_rgba(74,62,40,.11)] backdrop-blur-2xl sm:top-3 sm:rounded-[28px] sm:p-3">
+              <div className="grid grid-cols-4 rounded-[18px] bg-[#f5efe4] p-1">
                 {categories.map((item) => (
                   <button
                     key={item}
@@ -575,7 +575,7 @@ export function PublicPortfolioExperience({
                     onClick={() => setCategory(item)}
                     className={cn(
                       "relative h-10 rounded-[14px] text-[9px] font-semibold text-[#536d83] transition-colors sm:text-xs",
-                      category === item && "text-[#125fc5]",
+                      category === item && "text-[#8f6420]",
                     )}
                   >
                     {category === item && (
@@ -591,11 +591,11 @@ export function PublicPortfolioExperience({
               </div>
               <div className="mt-2.5 flex gap-2">
                 <div className="relative min-w-0 flex-1">
-                  <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#526d84]" />
+                  <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#6b6559]" />
                   <Input
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
-                    className="h-12 rounded-[16px] border-[#dfeaf3] bg-[#f7fbfe] pl-9 text-xs shadow-none placeholder:text-[#8ca1b3] focus-visible:bg-white"
+                    className="h-12 rounded-[16px] border-[#dfeaf3] bg-[#faf7f2] pl-9 text-xs shadow-none placeholder:text-[#8ca1b3] focus-visible:bg-white"
                     placeholder="Search Dubai"
                   />
                 </div>
@@ -610,7 +610,7 @@ export function PublicPortfolioExperience({
                     >
                       Filters
                       {activeFilters > 0 && (
-                        <span className="flex size-5 items-center justify-center rounded-full bg-[#1764c0] text-[8px] text-white">
+                        <span className="flex size-5 items-center justify-center rounded-full bg-[#8f6420] text-[8px] text-white">
                           {activeFilters}
                         </span>
                       )}
@@ -620,15 +620,15 @@ export function PublicPortfolioExperience({
                   <PopoverContent
                     align="end"
                     sideOffset={10}
-                    className="w-[min(92vw,370px)] rounded-[24px] border-[#dce9f4] p-4 shadow-[0_24px_75px_rgba(26,68,111,.18)]"
+                    className="w-[min(92vw,370px)] rounded-[24px] border-[#e9e1d3] p-4 shadow-[0_24px_75px_rgba(26,68,111,.18)]"
                   >
                     <div className="flex items-start gap-3">
-                      <span className="flex size-9 items-center justify-center rounded-full bg-[#eaf4ff] text-[#1764c0]">
+                      <span className="flex size-9 items-center justify-center rounded-full bg-[#eaf4ff] text-[#8f6420]">
                         <Compass className="size-4" />
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-[#163650]">Refine your search</p>
-                        <p className="mt-0.5 text-[9px] text-[#526d84]">Find the right fit, not more noise.</p>
+                        <p className="mt-0.5 text-[9px] text-[#6b6559]">Find the right fit, not more noise.</p>
                       </div>
                     </div>
                     <div className="mt-4 grid gap-3">
@@ -663,7 +663,7 @@ export function PublicPortfolioExperience({
                         </SelectContent>
                       </Select>
                     </div>
-                    <Button className="mt-4 h-11 w-full rounded-xl bg-[#102f4b] text-white hover:bg-[#17496f]" onClick={() => setFiltersOpen(false)}>
+                    <Button className="mt-4 h-11 w-full rounded-xl bg-[#17212e] text-white hover:bg-[#2a3543]" onClick={() => setFiltersOpen(false)}>
                       Show {visibleProperties.length} properties
                     </Button>
                   </PopoverContent>
@@ -673,12 +673,12 @@ export function PublicPortfolioExperience({
 
             <div className="mt-7 flex items-end justify-between">
               <div>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-[#1764c0]">Curated selection</p>
+                <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-[#8f6420]">Curated selection</p>
                 <h3 className="mt-1 text-2xl font-semibold tracking-[-0.045em] text-[#143650]">
                   {category === "All" ? "All opportunities" : category}
                 </h3>
               </div>
-              <span className="text-[9px] text-[#526d84] sm:text-[10px]">
+              <span className="text-[9px] text-[#6b6559] sm:text-[10px]">
                 {visibleProperties.length} result{visibleProperties.length === 1 ? "" : "s"}
               </span>
             </div>
@@ -693,9 +693,9 @@ export function PublicPortfolioExperience({
 
             {visibleProperties.length === 0 && (
               <div className="mt-5 flex min-h-[300px] flex-col items-center justify-center rounded-[30px] border border-dashed border-[#cbddea] bg-white/70 p-8 text-center">
-                <Search className="size-6 text-[#1764c0]" />
+                <Search className="size-6 text-[#8f6420]" />
                 <h2 className="mt-4 text-base font-semibold text-[#163650]">No matching properties</h2>
-                <p className="mt-1 text-[10px] text-[#526d84]">Try another category or remove a filter.</p>
+                <p className="mt-1 text-[10px] text-[#6b6559]">Try another category or remove a filter.</p>
               </div>
             )}
           </div>
@@ -708,7 +708,7 @@ export function PublicPortfolioExperience({
               <div className="relative mx-auto h-[330px] w-full max-w-[390px] overflow-hidden rounded-[28px] border border-white/90 bg-white/40 shadow-[0_26px_70px_rgba(27,67,108,.15)] sm:h-[430px] sm:rounded-[36px]">
                 <Image src="/rahul-profile.png" alt="Rahul, Dubai Property Advisor" fill sizes="(max-width: 640px) 100vw, 390px" className="object-cover object-top" />
                 <div className="absolute inset-x-3 bottom-3 rounded-[20px] border border-white/70 bg-white/72 p-4 backdrop-blur-xl sm:inset-x-5 sm:bottom-5">
-                  <p className="text-sm font-semibold text-[#153a58]">Rahul</p>
+                  <p className="text-sm font-semibold text-[#1b2634]">Rahul</p>
                   <p className="mt-1 text-[9px] text-[#627f96]">Private Dubai property advisory</p>
                 </div>
               </div>
@@ -716,7 +716,7 @@ export function PublicPortfolioExperience({
                 <Badge className="border-white/80 bg-white/68 text-[#236ebf] backdrop-blur-xl hover:bg-white/80">
                   <MessageCircleMore className="size-3" /> One advisor, end to end
                 </Badge>
-                <h2 className="mt-5 text-[36px] font-semibold leading-[.98] tracking-[-0.06em] text-[#102f4b] sm:text-5xl lg:text-6xl">
+                <h2 className="mt-5 text-[36px] font-semibold leading-[.98] tracking-[-0.06em] text-[#17212e] sm:text-5xl lg:text-6xl">
                   Property decisions feel better when they feel personal.
                 </h2>
                 <p className="mt-5 max-w-[570px] text-[11px] leading-6 text-[#58758d] sm:text-sm sm:leading-7">
@@ -731,14 +731,14 @@ export function PublicPortfolioExperience({
                     const AdvisoryIcon = Icon as typeof Building2;
                     return (
                       <div key={String(title)} className="rounded-[20px] border border-white/80 bg-white/58 p-4 backdrop-blur-xl">
-                        <AdvisoryIcon className="size-4 text-[#1764c0]" />
+                        <AdvisoryIcon className="size-4 text-[#8f6420]" />
                         <p className="mt-3 text-[10px] font-semibold text-[#173650]">{String(title)}</p>
-                        <p className="mt-1 text-[8px] text-[#526d84]">{String(copy)}</p>
+                        <p className="mt-1 text-[8px] text-[#6b6559]">{String(copy)}</p>
                       </div>
                     );
                   })}
                 </div>
-                <Button asChild className="mt-6 h-13 w-full rounded-[17px] bg-[#102f4b] px-5 text-white shadow-[0_15px_35px_rgba(16,47,75,.2)] hover:bg-[#17496f] sm:w-auto sm:rounded-full sm:px-7">
+                <Button asChild className="mt-6 h-13 w-full rounded-[17px] bg-[#17212e] px-5 text-white shadow-[0_15px_35px_rgba(23,33,46,.2)] hover:bg-[#2a3543] sm:w-auto sm:rounded-full sm:px-7">
                   <a href={whatsappUrl} target="_blank" rel="noreferrer">
                     Start a private conversation <ArrowUpRight className="ml-1" />
                   </a>
@@ -750,14 +750,14 @@ export function PublicPortfolioExperience({
 
         <footer className="mx-auto flex max-w-[1180px] flex-col gap-4 px-5 py-9 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-12">
           <BrandMark />
-          <p className="max-w-sm text-[9px] leading-5 text-[#526d84] sm:text-right">
+          <p className="max-w-sm text-[9px] leading-5 text-[#6b6559] sm:text-right">
             Curated Dubai property opportunities with personal guidance from first conversation to final decision.
           </p>
         </footer>
       </main>
 
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/75 bg-white/88 p-3 pb-[max(.75rem,env(safe-area-inset-bottom))] shadow-[0_-18px_48px_rgba(38,70,131,.12)] backdrop-blur-2xl sm:hidden">
-        <Button asChild className="mx-auto h-13 w-full max-w-lg rounded-[17px] bg-[#102f4b] px-4 text-sm text-white shadow-[0_14px_30px_rgba(16,47,75,.2)] hover:bg-[#17496f]">
+        <Button asChild className="mx-auto h-13 w-full max-w-lg rounded-[17px] bg-[#17212e] px-4 text-sm text-white shadow-[0_14px_30px_rgba(23,33,46,.2)] hover:bg-[#2a3543]">
           <a href={whatsappUrl} target="_blank" rel="noreferrer">
             <MessageCircleMore className="size-5" /> Ask Rahul to shortlist <ArrowRight className="ml-auto" />
           </a>

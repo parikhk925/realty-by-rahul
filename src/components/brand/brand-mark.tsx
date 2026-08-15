@@ -28,7 +28,7 @@ export function BrandMark({
   const rest = restWords.join(" ");
 
   const tile = (
-    <span className="relative grid size-9 shrink-0 place-items-center overflow-hidden rounded-[11px] bg-[linear-gradient(135deg,#f3d9a1_0%,#d9a94f_45%,#a9762a_100%)] shadow-[0_6px_16px_rgba(169,118,42,.35),inset_0_1px_0_rgba(255,255,255,.5)]">
+    <span className="relative grid size-9 shrink-0 place-items-center overflow-hidden rounded-[11px] bg-[linear-gradient(135deg,#f3d9a1_0%,#d9a94f_45%,#8f6420_100%)] shadow-[0_6px_16px_rgba(169,118,42,.35),inset_0_1px_0_rgba(255,255,255,.5)]">
       <span className="text-[13px] font-bold leading-none tracking-[0.02em] text-[#231603]">
         {BRAND_MARK}
       </span>

@@ -185,7 +185,7 @@ export function LeadCaptureForm({
       <Button
         type="submit"
         disabled={pending}
-        className="h-12 w-full rounded-xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-[11px] shadow-[0_14px_32px_rgba(35,96,221,.28)]"
+        className="h-12 w-full rounded-xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-[11px] shadow-[0_14px_32px_rgba(184,134,47,.28)]"
       >
         {pending ? <LoaderCircle className="animate-spin" /> : <Send className="size-4" />}
         {pending ? "Sending…" : "Request details"}

@@ -89,7 +89,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
       <Button
         type="submit"
         disabled={pending || !configured}
-        className="h-12 w-full rounded-xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-sm shadow-[0_14px_32px_rgba(35,96,221,.25)]"
+        className="h-12 w-full rounded-xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-sm shadow-[0_14px_32px_rgba(184,134,47,.25)]"
       >
         {pending && <LoaderCircle className="animate-spin" />}
         {pending ? "Signing in…" : "Sign in to workspace"}

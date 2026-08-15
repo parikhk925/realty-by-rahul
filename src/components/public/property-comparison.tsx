@@ -158,7 +158,7 @@ export function PropertyComparison({ property, candidates }: PropertyComparisonP
     <Link
       href={`/listing/${encodeURIComponent(candidate.slug)}`}
       aria-label={`Compare with ${candidate.title}`}
-      className="group mx-4 mt-8 block overflow-hidden rounded-[28px] border border-white/85 bg-white/86 shadow-[0_20px_58px_rgba(43,75,139,.12)] backdrop-blur-2xl transition-all hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(43,75,139,.18)] sm:mx-0"
+      className="group mx-4 mt-8 block overflow-hidden rounded-[28px] border border-white/85 bg-white/86 shadow-[0_20px_58px_rgba(74,62,40,.12)] backdrop-blur-2xl transition-all hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(74,62,40,.18)] sm:mx-0"
     >
       <div className="p-5 pb-0 sm:p-7 sm:pb-0">
         <div className="flex items-start justify-between gap-3">

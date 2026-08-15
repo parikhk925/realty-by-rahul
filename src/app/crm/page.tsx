@@ -9,14 +9,14 @@ export const metadata = { title: "Lead CRM" };
 const TEMPERATURE_STYLES: Record<string, string> = {
   hot: "bg-[#fdecea] text-[#c8342b] border-[#f7cdc8]",
   warm: "bg-[#fff6e6] text-[#a5701a] border-[#f3ddb4]",
-  cold: "bg-[#eef4fa] text-[#4d6c88] border-[#d8e5f1]",
+  cold: "bg-[#f5f0e6] text-[#6b6559] border-[#e6dcc9]",
 };
 
 function Metric({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="rounded-[20px] border border-[#dce9f4] bg-white p-4 shadow-[0_10px_30px_rgba(37,77,119,.06)]">
-      <p className="text-2xl font-semibold tracking-[-0.04em] text-[#102f4b]">{value}</p>
-      <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-[#6c869c]">{label}</p>
+    <div className="rounded-[20px] border border-[#e9e1d3] bg-white p-4 shadow-[0_10px_30px_rgba(74,62,40,.06)]">
+      <p className="text-2xl font-semibold tracking-[-0.04em] text-[#17212e]">{value}</p>
+      <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-[#7d766a]">{label}</p>
     </div>
   );
 }
@@ -25,11 +25,11 @@ function LeadCard({ lead }: { lead: Lead }) {
   const budget = lead.requirements.budgetMax ?? lead.requirements.budgetMin;
 
   return (
-    <article className="rounded-[24px] border border-[#dce9f4] bg-white p-5 shadow-[0_14px_40px_rgba(37,77,119,.07)]">
+    <article className="rounded-[24px] border border-[#e9e1d3] bg-white p-5 shadow-[0_14px_40px_rgba(74,62,40,.07)]">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-sm font-semibold text-[#102f4b]">
+            <h2 className="text-sm font-semibold text-[#17212e]">
               {lead.name ?? `Website visitor ${lead.id.slice(-4)}`}
             </h2>
             <span
@@ -39,13 +39,13 @@ function LeadCard({ lead }: { lead: Lead }) {
             >
               {lead.temperature} · {lead.score}/100
             </span>
-            <span className="rounded-full border border-[#dce9f4] bg-[#f7fbfe] px-2 py-0.5 text-[10px] text-[#4d6c88]">
+            <span className="rounded-full border border-[#e9e1d3] bg-[#faf7f2] px-2 py-0.5 text-[10px] text-[#6b6559]">
               {lead.stage}
             </span>
           </div>
-          <p className="mt-1.5 text-[11px] text-[#5e7690]">{lead.summary}</p>
+          <p className="mt-1.5 text-[11px] text-[#6f6a5f]">{lead.summary}</p>
         </div>
-        <p className="text-[10px] text-[#8aa2b8]">
+        <p className="text-[10px] text-[#9a9284]">
           {new Date(lead.updatedAt).toLocaleString("en-GB", {
             day: "numeric",
             month: "short",
@@ -57,7 +57,7 @@ function LeadCard({ lead }: { lead: Lead }) {
 
       <div className="mt-4 grid gap-4 lg:grid-cols-[1.1fr_1fr]">
         <div>
-          <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#8aa2b8]">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#9a9284]">
             Captured requirements
           </p>
           <dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
@@ -84,22 +84,22 @@ function LeadCard({ lead }: { lead: Lead }) {
               .filter(([, value]) => Boolean(value))
               .map(([label, value]) => (
                 <div key={label as string}>
-                  <dt className="text-[9px] uppercase tracking-[0.1em] text-[#9db0c2]">
+                  <dt className="text-[9px] uppercase tracking-[0.1em] text-[#7d766a]">
                     {label}
                   </dt>
-                  <dd className="font-medium capitalize text-[#20405c]">{value as string}</dd>
+                  <dd className="font-medium capitalize text-[#28313d]">{value as string}</dd>
                 </div>
               ))}
           </dl>
 
-          <p className="mt-4 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#8aa2b8]">
+          <p className="mt-4 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#9a9284]">
             Score breakdown
           </p>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
             {lead.breakdown.map((item) => (
               <span
                 key={item.label}
-                className="rounded-full border border-[#e4eef7] bg-[#f7fbfe] px-2 py-0.5 text-[10px] text-[#4d6c88]"
+                className="rounded-full border border-[#ece5d8] bg-[#faf7f2] px-2 py-0.5 text-[10px] text-[#6b6559]"
               >
                 {item.label} +{item.points}
               </span>
@@ -115,35 +115,35 @@ function LeadCard({ lead }: { lead: Lead }) {
         </div>
 
         <div>
-          <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#8aa2b8]">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#9a9284]">
             Recommended ({lead.recommended.length})
           </p>
           <div className="mt-2 space-y-1.5">
             {lead.recommended.length === 0 && (
-              <p className="text-[11px] text-[#8aa2b8]">No matches yet.</p>
+              <p className="text-[11px] text-[#9a9284]">No matches yet.</p>
             )}
             {lead.recommended.map((property) => (
               <Link
                 key={property.slug}
                 href={`/listing/${encodeURIComponent(property.slug)}`}
-                className="block rounded-[14px] border border-[#e4eef7] bg-[#f7fbfe] px-3 py-2 transition hover:border-[#a9cdee]"
+                className="block rounded-[14px] border border-[#ece5d8] bg-[#faf7f2] px-3 py-2 transition hover:border-[#d6bf94]"
               >
                 <div className="flex items-center justify-between gap-2">
-                  <p className="truncate text-[11px] font-medium text-[#20405c]">
+                  <p className="truncate text-[11px] font-medium text-[#28313d]">
                     {property.title}
                   </p>
-                  <span className="shrink-0 text-[10px] font-semibold text-[#1764c0]">
+                  <span className="shrink-0 text-[10px] font-semibold text-[#8f6420]">
                     {property.matchPercentage}%
                   </span>
                 </div>
-                <p className="text-[10px] text-[#7891a7]">
+                <p className="text-[10px] text-[#6f6a5f]">
                   {property.community} · {property.priceQualifier} {property.price}
                 </p>
               </Link>
             ))}
           </div>
 
-          <p className="mt-4 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#8aa2b8]">
+          <p className="mt-4 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#9a9284]">
             Conversation
           </p>
           <div className="mt-2 max-h-52 space-y-1.5 overflow-y-auto pr-1">
@@ -152,8 +152,8 @@ function LeadCard({ lead }: { lead: Lead }) {
                 key={i}
                 className={`rounded-[12px] px-2.5 py-1.5 text-[10px] leading-relaxed ${
                   turn.role === "lead"
-                    ? "bg-[#eef5fc] text-[#20405c]"
-                    : "bg-[#f6f8fa] text-[#5e7690]"
+                    ? "bg-[#f5efe3] text-[#28313d]"
+                    : "bg-[#f7f4ee] text-[#6f6a5f]"
                 }`}
               >
                 <span className="mr-1 font-semibold">
@@ -175,24 +175,24 @@ export default async function CrmPage() {
   const viewings = leads.filter((lead) => lead.viewingRequested);
 
   return (
-    <main className="min-h-screen bg-[#f7fbfe] px-4 py-8 text-[#10243a] sm:px-8 sm:py-12">
+    <main className="min-h-screen bg-[#faf7f2] px-4 py-8 text-[#17212e] sm:px-8 sm:py-12">
       <div className="mx-auto max-w-[1180px]">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#1764c0]">
+            <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#8f6420]">
               {BRAND_NAME}
             </p>
-            <h1 className="mt-1.5 text-3xl font-semibold tracking-[-0.05em] text-[#102f4b] sm:text-4xl">
+            <h1 className="mt-1.5 text-3xl font-semibold tracking-[-0.05em] text-[#17212e] sm:text-4xl">
               Lead qualification CRM
             </h1>
-            <p className="mt-1.5 max-w-[560px] text-[11px] text-[#5e7690] sm:text-xs">
+            <p className="mt-1.5 max-w-[560px] text-[11px] text-[#6f6a5f] sm:text-xs">
               Every conversation from the site assistant, scored and routed
               automatically. {AGENT_NAME} only needs to act on what is already hot.
             </p>
           </div>
           <Link
             href="/"
-            className="rounded-full border border-[#dce9f4] bg-white px-4 py-2 text-[11px] font-semibold text-[#1764c0] transition hover:border-[#a9cdee]"
+            className="rounded-full border border-[#e9e1d3] bg-white px-4 py-2 text-[11px] font-semibold text-[#8f6420] transition hover:border-[#d6bf94]"
           >
             View public site
           </Link>
@@ -227,8 +227,8 @@ export default async function CrmPage() {
         <div className="mt-6 space-y-4">
           {leads.length === 0 ? (
             <div className="rounded-[24px] border border-dashed border-[#cfe0ee] bg-white px-6 py-16 text-center">
-              <p className="text-sm font-semibold text-[#102f4b]">No leads yet</p>
-              <p className="mx-auto mt-1.5 max-w-[420px] text-[11px] text-[#5e7690]">
+              <p className="text-sm font-semibold text-[#17212e]">No leads yet</p>
+              <p className="mx-auto mt-1.5 max-w-[420px] text-[11px] text-[#6f6a5f]">
                 Open the public site and start a conversation with the chat
                 assistant — the qualified lead will appear here immediately.
               </p>

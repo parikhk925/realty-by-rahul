@@ -447,7 +447,7 @@ export function PublicCollectionExperience({
           </div>
           <Button
             asChild
-            className="h-12 rounded-2xl bg-[linear-gradient(135deg,#4381ff,#174fd7)] px-5 shadow-[0_14px_32px_rgba(35,96,221,.3)]"
+            className="h-12 rounded-2xl bg-[linear-gradient(135deg,#4381ff,#174fd7)] px-5 shadow-[0_14px_32px_rgba(184,134,47,.3)]"
           >
             <a href={whatsappUrl} target="_blank" rel="noreferrer">
               <MessageCircleMore />

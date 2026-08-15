@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LeadChatWidget } from "@/components/crm/lead-chat-widget";
@@ -10,6 +10,18 @@ import "./globals.css";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+/**
+ * The display face. Optical sizing does the work at headline scale, and the
+ * light `wonk` axis keeps it characterful rather than a generic Georgia
+ * substitute — this is what stops the page reading as another Inter template.
+ */
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  axes: ["SOFT", "WONK", "opsz"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +39,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${fraunces.variable}`}
+      suppressHydrationWarning
+    >
       <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light">
           <TooltipProvider>

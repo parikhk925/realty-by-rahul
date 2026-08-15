@@ -367,7 +367,7 @@ export function PublicListingExperience({
               {facts.map((fact) => (
                 <div
                   key={fact.label}
-                  className="rounded-2xl border border-white/80 bg-white/75 p-4 shadow-[0_14px_38px_rgba(50,81,142,.07)] backdrop-blur-xl"
+                  className="rounded-2xl border border-white/80 bg-white/75 p-4 shadow-[0_14px_38px_rgba(74,62,40,.07)] backdrop-blur-xl"
                 >
                   <fact.icon className="size-4 text-primary" />
                   <p className="mt-3 text-[9px] text-muted-foreground">{fact.label}</p>
@@ -575,7 +575,7 @@ export function PublicListingExperience({
           </div>
 
           <aside className="hidden lg:block">
-            <div className="sticky top-[94px] overflow-hidden rounded-[30px] border border-white/80 bg-white/86 shadow-[0_26px_70px_rgba(43,75,139,.15)] backdrop-blur-2xl">
+            <div className="sticky top-[94px] overflow-hidden rounded-[30px] border border-white/80 bg-white/86 shadow-[0_26px_70px_rgba(74,62,40,.15)] backdrop-blur-2xl">
               <div className="sunrise-surface p-5">
                 <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-primary">
                   {property.priceQualifier ?? (isRental ? "Annual rent" : "Guide price")}
@@ -591,7 +591,7 @@ export function PublicListingExperience({
               <div className="p-5">
                 <Button
                   asChild
-                  className="h-14 w-full rounded-2xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-sm shadow-[0_16px_36px_rgba(35,96,221,.3)] hover:-translate-y-0.5"
+                  className="h-14 w-full rounded-2xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-sm shadow-[0_16px_36px_rgba(184,134,47,.3)] hover:-translate-y-0.5"
                 >
                   <a href={whatsappUrl} target="_blank" rel="noreferrer">
                     <MessageCircleMore className="size-5" />
@@ -687,7 +687,7 @@ export function PublicListingExperience({
 
         <section
           id="register-interest"
-          className="mx-4 mt-8 scroll-mt-24 overflow-hidden rounded-[28px] border border-white/80 bg-white/86 p-5 shadow-[0_20px_58px_rgba(43,75,139,.12)] backdrop-blur-2xl sm:mx-0 sm:p-7"
+          className="mx-4 mt-8 scroll-mt-24 overflow-hidden rounded-[28px] border border-white/80 bg-white/86 p-5 shadow-[0_20px_58px_rgba(74,62,40,.12)] backdrop-blur-2xl sm:mx-0 sm:p-7"
         >
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-start">
             <div>
@@ -854,7 +854,7 @@ export function PublicListingExperience({
             )}
             <Button
               asChild
-              className="h-13 flex-1 rounded-2xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-sm shadow-[0_14px_32px_rgba(35,96,221,.3)]"
+              className="h-13 flex-1 rounded-2xl bg-[linear-gradient(135deg,#4280ff,#174ed6)] text-sm shadow-[0_14px_32px_rgba(184,134,47,.3)]"
             >
               <a href={whatsappUrl} target="_blank" rel="noreferrer">
                 <MessageCircleMore className="size-5" />

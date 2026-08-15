@@ -76,7 +76,7 @@ export function IntroCurtain() {
 
           <div className="relative flex flex-col items-center">
             <motion.div
-              className="grid size-24 place-items-center overflow-hidden rounded-[26px] bg-[linear-gradient(135deg,#f3d9a1_0%,#d9a94f_45%,#a9762a_100%)] shadow-[0_24px_60px_rgba(217,169,79,.4)]"
+              className="grid size-24 place-items-center overflow-hidden rounded-[26px] bg-[linear-gradient(135deg,#f3d9a1_0%,#d9a94f_45%,#8f6420_100%)] shadow-[0_24px_60px_rgba(217,169,79,.4)]"
               initial={{ scale: 0.5, opacity: 0, rotate: -12 }}
               animate={{ scale: 1, opacity: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 180, damping: 14, delay: 0.15 }}

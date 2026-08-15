@@ -152,7 +152,7 @@ export function LeadsWorkspace({ leads, agents, demo }: LeadsWorkspaceProps) {
           {visible.map((lead) => (
             <article
               key={lead.id}
-              className="rounded-[24px] border border-white/85 bg-white/85 p-4 shadow-[0_14px_40px_rgba(43,75,139,.08)] backdrop-blur-xl sm:p-5"
+              className="rounded-[24px] border border-white/85 bg-white/85 p-4 shadow-[0_14px_40px_rgba(74,62,40,.08)] backdrop-blur-xl sm:p-5"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">

@@ -15,7 +15,7 @@ export default function StudioLoading() {
         <div className="h-28 rounded-[26px] border border-white/80 bg-white/70 shadow-[0_18px_50px_rgba(49,80,141,.06)]" />
       </div>
 
-      <div className="mt-5 h-[340px] rounded-[30px] border border-white/80 bg-white/72 shadow-[0_24px_70px_rgba(46,80,147,.08)]" />
+      <div className="mt-5 h-[340px] rounded-[30px] border border-white/80 bg-white/72 shadow-[0_24px_70px_rgba(74,62,40,.08)]" />
       <span className="sr-only">Loading workspace</span>
     </div>
   );
