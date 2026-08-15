@@ -1,4 +1,11 @@
-import { AGENT_NAME, BRAND_NAME } from "@/lib/property-data";
+import { AGENT_NAME } from "@/lib/property-data";
+import {
+  acknowledge,
+  bridgeToQuestion,
+  detectSmallTalk,
+  handoffLine,
+  smallTalkReply,
+} from "./conversation";
 import { extractRequirements, isCorrection, mergeRequirements } from "./extract";
 import { diagnoseNoMatch, recommendProperties } from "./recommend";
 import { scoreLead } from "./score";
@@ -183,34 +190,74 @@ export async function processMessage(input: {
     (requirements.budgetMax !== undefined || requirements.community !== undefined);
   const recommended = hasEnough ? recommendProperties(requirements) : [];
 
-  // Reply: a direct answer wins, then recommendations, then the next question.
+  // Reply, in priority order: small talk, a direct answer, a viewing request,
+  // recommendations, then the next qualification question. Each branch is
+  // written to sound like a person rather than a form.
+  const firstName = AGENT_NAME.split(" ")[0];
+  const seed = input.visitorId;
+  // Salted with the turn number: without this every bridge line in a
+  // conversation is identical, which is exactly what makes a bot sound
+  // like a bot.
+  const turnSeed = `${input.visitorId}:${existing?.conversation.length ?? 0}`;
   const knowledge = answerFromKnowledge(input.message);
   const question = nextQuestion(requirements);
+  const smallTalk = detectSmallTalk(input.message);
+  const answeredCount = QUESTIONS.filter((q) => requirements[q.key] !== undefined).length;
+
+  // Only acknowledge facts that arrived in *this* message — repeating things
+  // said three turns ago reads like a machine reciting a file back.
+  const ack = Object.keys(extracted).length > 0 ? acknowledge(extracted, seed) : null;
+
   let reply: string;
   let quickReplies: string[] = [];
 
-  if (knowledge) {
+  if (smallTalk && Object.keys(extracted).length === 0) {
+    // Pure small talk with nothing to extract: answer it warmly, then move on.
+    const opener = smallTalkReply(smallTalk, seed, firstName, Boolean(existing));
+    if (smallTalk === "goodbye" || smallTalk === "thanks") {
+      reply = opener;
+      quickReplies = question ? question.options : [];
+      if (smallTalk === "thanks" && question) {
+        reply = `${opener} ${bridgeToQuestion(turnSeed, answeredCount === 0)} ${question.prompt}`;
+      }
+    } else if (question) {
+      reply = `${opener}\n\n${bridgeToQuestion(turnSeed, answeredCount === 0)} ${question.prompt}`;
+      quickReplies = question.options;
+    } else {
+      reply = opener;
+    }
+  } else if (knowledge) {
     reply = knowledge;
     if (question) {
-      reply += `\n\n${question.prompt}`;
+      reply += `\n\n${bridgeToQuestion(turnSeed, answeredCount === 0)} ${question.prompt}`;
       quickReplies = question.options;
     }
   } else if (viewingRequested && hasEnough) {
-    reply = `Happy to arrange that. ${AGENT_NAME} will confirm a slot directly — what day and time suits you best?`;
+    reply = `${ack ? ack + " " : ""}Happy to arrange that — ${firstName} handles viewings himself. What day and time suits you?`;
     quickReplies = ["This week", "This weekend", "Next week"];
   } else if (recommended.length > 0 && !question) {
-    reply = `Based on what you've told me, here are the closest options in ${AGENT_NAME}'s portfolio.`;
+    reply = `${ack ? ack + "\n\n" : ""}Based on that, here's what I'd put in front of you from ${firstName}'s current portfolio.`;
     quickReplies = ["Book a viewing", "What's the payment plan?", "Show me more"];
   } else if (question) {
-    const prefix = existing ? "" : `Welcome to ${BRAND_NAME}. `;
-    reply = `${prefix}${question.prompt}`;
+    const greeting = existing
+      ? ""
+      : `Hi — I'm ${firstName}'s assistant here in Dubai. `;
+    const lead = ack ? `${greeting}${ack}` : `${greeting}`.trim();
+    reply = lead
+      ? `${lead}\n\n${bridgeToQuestion(turnSeed, answeredCount === 0)} ${question.prompt}`
+      : question.prompt;
     quickReplies = question.options;
   } else if (recommended.length > 0) {
-    reply = `Here are the strongest matches in ${AGENT_NAME}'s current portfolio.`;
+    reply = `${ack ? ack + "\n\n" : ""}These are the strongest matches in ${firstName}'s portfolio right now.`;
     quickReplies = ["Book a viewing", "What's the payment plan?"];
   } else {
     reply = diagnoseNoMatch(requirements);
     quickReplies = ["Book a call", "Widen my budget"];
+  }
+
+  // Once qualified, close by telling them what actually happens next.
+  if (!smallTalk && !question && temperature !== "cold" && recommended.length > 0) {
+    reply += `\n\n${handoffLine(firstName, temperature === "hot", seed)}`;
   }
 
   const conversation = [

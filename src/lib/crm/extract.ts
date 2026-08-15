@@ -91,14 +91,34 @@ export function extractRequirements(message: string): LeadRequirements {
     const single = text.match(
       /(?:budget|around|about|upto|up to|under|max(?:imum)?|below|aed)\s*((?:aed\s*)?[\d,.]+\s*(?:m|mn|million|k|thousand)?)/i,
     );
-    const amount = single ? parseAmount(single[1]) : undefined;
+    let amount = single ? parseAmount(single[1]) : undefined;
+
+    // A bare figure is the most natural answer to "what budget?" — "3.5M",
+    // "2 million", "850k". Only accepted with an explicit magnitude, or as a
+    // large plain number, and never when the number is measuring something
+    // else (bedrooms, area, yield, timeline).
+    if (!amount) {
+      const bare = text.match(
+        /(?<![\w.])([\d,]+(?:\.\d+)?)\s*(m|mn|million|k|thousand)?(?!\s*(?:bed|bedroom|br|bhk|sq|sqft|%|day|week|month|year))/i,
+      );
+      if (bare) {
+        const candidate = parseAmount(`${bare[1]}${bare[2] ? " " + bare[2] : ""}`);
+        const hasUnit = Boolean(bare[2]);
+        if (candidate && ((hasUnit && candidate >= 50_000) || candidate >= 100_000)) {
+          amount = candidate;
+        }
+      }
+    }
+
     if (amount && amount >= 10_000) out.budgetMax = amount;
   }
 
   // Bedrooms
   if (/\bstudio\b/.test(text)) out.bedrooms = 0;
   else {
-    const bed = text.match(/(\d)\s*(?:-|\s)?\s*(?:bed|bedroom|br|bhk)\b/);
+    // Plural matters: "2 bedrooms" is far more common than "2 bedroom", and
+    // requiring a boundary straight after "bedroom" silently dropped it.
+    const bed = text.match(/(\d)\s*(?:-|\s)?\s*(?:beds?|bedrooms?|br|bhk)\b/);
     if (bed) out.bedrooms = Number(bed[1]);
   }
 
