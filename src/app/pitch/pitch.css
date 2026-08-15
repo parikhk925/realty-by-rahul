@@ -185,6 +185,44 @@
     margin: 12mm;
   }
 
+  /* Every topic starts its own page. Mixed sections read as a brochure that
+     ran out of room; one topic per page reads as a deck. */
+  .kt-root section,
+  .kt-root footer {
+    break-before: page;
+  }
+
+  /* A heading stranded at the foot of a page with its content overleaf is the
+     single worst artifact in a printed deck. */
+  .kt-eyebrow,
+  .kt-root h2,
+  .kt-root h3,
+  .kt-rule {
+    break-after: avoid;
+  }
+
+  .kt-root h2,
+  .kt-root h3 {
+    break-inside: avoid;
+  }
+
+  figure,
+  table,
+  .kt-phone {
+    break-inside: avoid;
+  }
+
+  /* Print does not need the generous screen rhythm. */
+  .kt-root section {
+    padding-top: 14mm;
+    padding-bottom: 8mm;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
   .kt-root {
     background: #fff;
   }
