@@ -316,7 +316,9 @@ export default function PitchPage() {
           ].map((item) => (
             <div key={item.stat} className="kt-card kt-avoid-break p-6">
               <Icon name={item.icon} />
-              <p className="kt-grad-text mt-4 text-[34px] font-bold">{item.stat}</p>
+              <p className="kt-grad-text mt-4 whitespace-nowrap text-[30px] font-bold leading-none">
+                {item.stat}
+              </p>
               <p className="mt-2 text-[13px] font-semibold">{item.label}</p>
               <p className="mt-1.5 text-[11.5px] leading-relaxed text-[var(--kt-body)]">
                 {item.note}
