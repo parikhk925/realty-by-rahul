@@ -179,20 +179,30 @@ export function extractRequirements(message: string): LeadRequirements {
   const roi = text.match(/(\d{1,2}(?:\.\d)?)\s*%/);
   if (roi) out.expectedRoi = `${roi[1]}%`;
 
-  // Intent is often implied rather than stated: someone describing a unit and
-  // a budget is buying unless they said otherwise.
+  // Intent is usually implied, not stated. "2 bed downtown 2 million" is a
+  // buyer; requiring a verb like "want" meant those messages produced no
+  // intent, and without an intent nothing is ever recommended.
+  //
+  // Rent, invest and sell are all detected explicitly above, so anything left
+  // that describes a property is a purchase enquiry. Two signals are required
+  // so a lone number or a bare area name does not trigger it.
   if (!out.intent) {
-    const describesProperty =
-      out.bedrooms !== undefined ||
-      out.propertyType !== undefined ||
-      out.community !== undefined ||
-      out.budgetMax !== undefined;
+    const signals = [
+      out.bedrooms !== undefined,
+      out.propertyType !== undefined,
+      out.community !== undefined,
+      out.budgetMax !== undefined,
+      // "off-plan" is as strong a purchase signal as a bedroom count.
+      out.marketType !== undefined,
+    ].filter(Boolean).length;
+
     const shopping =
       // `wanted?` would make the d optional and never match a plain "want".
-      /looking for|look for|want(?:s|ed)?\b|needs?\b|searching|interested in|show me|find me|do you have|got any|any\b/i.test(
+      /looking for|look for|want(?:s|ed)?\b|needs?\b|searching|interested in|show me|find me|do you have|got any/i.test(
         text,
       );
-    if (describesProperty && shopping) out.intent = "buy";
+
+    if (signals >= 2 || (signals >= 1 && shopping)) out.intent = "buy";
   }
 
   return out;

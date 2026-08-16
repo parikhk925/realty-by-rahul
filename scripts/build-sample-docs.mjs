@@ -9,7 +9,7 @@
  *
  * Run: node scripts/build-sample-docs.mjs
  */
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
 const NAVY = rgb(0.05, 0.12, 0.2);
@@ -17,14 +17,11 @@ const GOLD = rgb(0.82, 0.64, 0.34);
 const GREY = rgb(0.42, 0.48, 0.55);
 const LIGHT = rgb(0.9, 0.93, 0.96);
 
-const LISTINGS = [
-  { slug: "marina-vista-2br-emaar-beachfront", title: "Marina Vista — 2 Bed Sea View", community: "Emaar Beachfront", beds: 2, baths: 3, area: "1,180 sq ft" },
-  { slug: "creek-waters-1br-off-plan", title: "Creek Waters — 1 Bed Off-Plan", community: "Dubai Creek Harbour", beds: 1, baths: 2, area: "745 sq ft" },
-  { slug: "damac-hills-2-4br-townhouse", title: "Damac Hills 2 — 4 Bed Townhouse", community: "Damac Hills", beds: 4, baths: 4, area: "2,320 sq ft" },
-  { slug: "jvc-studio-rental", title: "Jumeirah Village Circle — Studio", community: "Jumeirah Village Circle", beds: 0, baths: 1, area: "430 sq ft" },
-  { slug: "palm-jumeirah-3br-penthouse", title: "Palm Jumeirah — 3 Bed Penthouse", community: "Palm Jumeirah", beds: 3, baths: 4, area: "3,650 sq ft" },
-  { slug: "business-bay-office-floor", title: "Business Bay — Fitted Office Floor", community: "Business Bay", beds: 0, baths: 2, area: "2,900 sq ft" },
-];
+// Read straight from the seed file's extracted data, so adding inventory
+// does not mean hand-maintaining a second list here.
+const LISTINGS = JSON.parse(
+  await readFile(new URL("./_listings.json", import.meta.url), "utf8"),
+);
 
 function header(page, font, bold, title, kicker) {
   const { width, height } = page.getSize();
