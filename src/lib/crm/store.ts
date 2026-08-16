@@ -163,6 +163,26 @@ export async function listLeads(): Promise<Lead[]> {
   return (data ?? []).map(toLead);
 }
 
+/**
+ * Wipes a visitor's history so the next message starts a fresh conversation.
+ *
+ * Exists for demos: without it, showing the flow twice from the same phone
+ * means the second run opens with "welcome back" and skips every question
+ * that was already answered.
+ */
+export async function deleteLeadByVisitor(visitorId: string): Promise<void> {
+  const db = client();
+  if (!db) {
+    for (const [id, lead] of memory().leads) {
+      if (lead.visitorId === visitorId) memory().leads.delete(id);
+    }
+    return;
+  }
+
+  const { error } = await db.from("crm_leads").delete().eq("visitor_id", visitorId);
+  if (error) console.error("crm.delete_lead_failed", error.message);
+}
+
 export async function getLead(id: string): Promise<Lead | undefined> {
   const db = client();
   if (!db) return memory().leads.get(id);

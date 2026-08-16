@@ -17,7 +17,7 @@ import {
 } from "./extract";
 import { diagnoseNoMatch, recommendProperties } from "./recommend";
 import { scoreLead } from "./score";
-import { findLeadByVisitor, saveLead } from "./store";
+import { deleteLeadByVisitor, findLeadByVisitor, saveLead } from "./store";
 import type { Lead, LeadRequirements, RecommendedProperty } from "./types";
 
 /**
@@ -173,6 +173,19 @@ export async function processMessage(input: {
   name?: string;
 }): Promise<ProcessResult> {
   const now = new Date().toISOString();
+
+  // Demo escape hatch: start the conversation over from this number.
+  if (/^(reset|restart|start over|new chat|clear)$/i.test(input.message.trim())) {
+    await deleteLeadByVisitor(input.visitorId);
+    const fresh = await processMessage({ ...input, message: "hi" });
+    return {
+      ...fresh,
+      reply: `Conversation reset.
+
+${fresh.reply}`,
+    };
+  }
+
   const existing = await findLeadByVisitor(input.visitorId);
 
   // WhatsApp renders quick replies as a numbered list, so "2" is a normal
