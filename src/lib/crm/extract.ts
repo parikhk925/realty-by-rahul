@@ -179,6 +179,22 @@ export function extractRequirements(message: string): LeadRequirements {
   const roi = text.match(/(\d{1,2}(?:\.\d)?)\s*%/);
   if (roi) out.expectedRoi = `${roi[1]}%`;
 
+  // Intent is often implied rather than stated: someone describing a unit and
+  // a budget is buying unless they said otherwise.
+  if (!out.intent) {
+    const describesProperty =
+      out.bedrooms !== undefined ||
+      out.propertyType !== undefined ||
+      out.community !== undefined ||
+      out.budgetMax !== undefined;
+    const shopping =
+      // `wanted?` would make the d optional and never match a plain "want".
+      /looking for|look for|want(?:s|ed)?\b|needs?\b|searching|interested in|show me|find me|do you have|got any|any\b/i.test(
+        text,
+      );
+    if (describesProperty && shopping) out.intent = "buy";
+  }
+
   return out;
 }
 

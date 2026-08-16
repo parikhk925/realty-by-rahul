@@ -42,46 +42,33 @@ interface Question {
   options: string[];
 }
 
+/**
+ * What we ask, in order.
+ *
+ * Three questions, not eight. Everything else — bedrooms, property type,
+ * off-plan, payment — is captured when the lead mentions it, but is never
+ * asked for. A buyer who wanted to fill in eight fields would have used the
+ * form on the website.
+ *
+ * No option lists: on WhatsApp a numbered menu invites one-word replies and
+ * makes the whole thing feel like an IVR. The extractor handles free text,
+ * so let people type.
+ */
 const QUESTIONS: Question[] = [
   {
     key: "intent",
-    prompt: "Are you looking to buy, invest, rent, or sell?",
-    options: ["Buy", "Invest", "Rent", "Sell"],
+    prompt: "What are you looking for?",
+    options: [],
   },
   {
     key: "budgetMax",
-    prompt: "What budget are you working to?",
-    options: ["Under AED 1M", "AED 1–2M", "AED 2–5M", "AED 5M+"],
+    prompt: "What budget are you working with?",
+    options: [],
   },
   {
     key: "community",
-    prompt: "Which area or community are you focused on?",
-    options: ["Dubai Marina", "Downtown Dubai", "Palm Jumeirah", "Open to suggestions"],
-  },
-  {
-    key: "propertyType",
-    prompt: "What type of property suits you?",
-    options: ["Apartment", "Villa", "Townhouse", "Penthouse"],
-  },
-  {
-    key: "bedrooms",
-    prompt: "How many bedrooms do you need?",
-    options: ["Studio", "1 bedroom", "2 bedrooms", "3+ bedrooms"],
-  },
-  {
-    key: "marketType",
-    prompt: "Are you after off-plan or something ready to move into?",
-    options: ["Off-plan", "Ready", "Either"],
-  },
-  {
-    key: "timeline",
-    prompt: "What's your timeline?",
-    options: ["Immediately", "Within 30 days", "1–3 months", "Just exploring"],
-  },
-  {
-    key: "payment",
-    prompt: "Will this be a cash purchase or via mortgage?",
-    options: ["Cash", "Mortgage", "Not decided"],
+    prompt: "Any particular area in mind?",
+    options: [],
   },
 ];
 
@@ -271,60 +258,56 @@ export async function processMessage(input: {
   let askedSchedule = false;
 
   if (smallTalk && Object.keys(extracted).length === 0) {
-    // Pure small talk with nothing to extract: answer it warmly, then move on.
     const opener = smallTalkReply(smallTalk, seed, firstName, Boolean(existing));
     if (smallTalk === "goodbye" || smallTalk === "thanks") {
       reply = opener;
-      quickReplies = question ? question.options : [];
-      if (smallTalk === "thanks" && question) {
-        reply = `${opener} ${bridgeToQuestion(turnSeed, answeredCount === 0)} ${question.prompt}`;
-      }
     } else if (question) {
-      reply = `${opener}\n\n${bridgeToQuestion(turnSeed, answeredCount === 0)} ${question.prompt}`;
-      quickReplies = question.options;
+      reply = `${opener} ${question.prompt}`;
     } else {
       reply = opener;
     }
   } else if (knowledge) {
     reply = knowledge;
-    if (question) {
-      reply += `\n\n${bridgeToQuestion(turnSeed, answeredCount === 0)} ${question.prompt}`;
-      quickReplies = question.options;
-    }
+    if (question) reply += `
+
+${question.prompt}`;
   } else if (callRequested || (viewingRequested && hasEnough)) {
-    const thing = callRequested ? "a call" : "a viewing";
     if (requirements.preferredTime) {
       const verb = callRequested ? "call you" : "meet you";
-      reply = `${ack ? ack + " " : ""}Perfect — ${firstName} will ${verb} ${requirements.preferredTime}. I've put it on his list along with everything you've told me.`;
-      quickReplies = [];
+      reply = `Done — ${firstName} will ${verb} ${requirements.preferredTime}.`;
     } else {
-      reply = `${ack ? ack + " " : ""}Happy to arrange ${thing}. When suits you?`;
-      quickReplies = ["Today", "Tomorrow", "This weekend", "Next week"];
+      reply = `Sure — when suits you?`;
       askedSchedule = true;
+      quickReplies = [];
     }
   } else if (recommended.length > 0 && !question) {
-    reply = `${ack ? ack + "\n\n" : ""}Based on that, here's what I'd put in front of you from ${firstName}'s current portfolio.`;
-    quickReplies = ["Book a viewing", "What's the payment plan?", "Show me more"];
+    reply = `${ack ? ack + " " : ""}Here's what fits from ${firstName}'s current portfolio.`;
   } else if (question) {
+    // The opener leads with what we actually have, so there is something to
+    // react to rather than an interrogation.
     const greeting = existing
       ? ""
-      : `Hi — I'm ${firstName}'s assistant here in Dubai. `;
-    const lead = ack ? `${greeting}${ack}` : `${greeting}`.trim();
-    reply = lead
-      ? `${lead}\n\n${bridgeToQuestion(turnSeed, answeredCount === 0)} ${question.prompt}`
-      : question.prompt;
-    quickReplies = question.options;
+      : `Hi — ${firstName}'s assistant here. We cover off-plan, ready homes and investment property across Dubai. `;
+    reply = ack ? `${ack} ${question.prompt}` : `${greeting}${question.prompt}`;
   } else if (recommended.length > 0) {
-    reply = `${ack ? ack + "\n\n" : ""}These are the strongest matches in ${firstName}'s portfolio right now.`;
-    quickReplies = ["Book a viewing", "What's the payment plan?"];
+    reply = `${ack ? ack + " " : ""}These are the closest matches right now.`;
   } else {
-    reply = diagnoseNoMatch(requirements);
-    quickReplies = ["Book a call", "Widen my budget"];
+    // Nothing in stock fits. Never a dead end, and never an invitation to
+    // negotiate against ourselves — hand it to the advisor.
+    reply = `${ack ? ack + " " : ""}Nothing in the current portfolio matches that exactly. ${firstName} will be in touch shortly — he often has stock before it's listed.`;
   }
 
-  // Once qualified, close by telling them what actually happens next.
-  if (!smallTalk && !question && temperature !== "cold" && recommended.length > 0) {
-    reply += `\n\n${handoffLine(firstName, temperature === "hot", seed)}`;
+  // Close by saying what happens next — but never after a booking reply, which
+  // has already said what happens next.
+  if (
+    !smallTalk &&
+    !question &&
+    !callRequested &&
+    !viewingRequested &&
+    temperature !== "cold" &&
+    recommended.length > 0
+  ) {
+    reply += ` ${handoffLine(firstName, temperature === "hot", seed)}`;
   }
 
   const conversation = [
@@ -354,9 +337,11 @@ export async function processMessage(input: {
 
   // Carry the question forward. `asks` is what lets the next turn decide to
   // move on rather than repeat.
+  // Armed whenever a question is put, with or without options — otherwise
+  // removing the option lists silently disabled the anti-repeat guard.
   const askedKey = askedSchedule
     ? "__schedule"
-    : question && quickReplies.length > 0
+    : question
       ? question.key
       : undefined;
   const nextPending =

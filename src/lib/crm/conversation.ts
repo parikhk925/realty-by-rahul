@@ -82,9 +82,9 @@ export function smallTalkReply(
       }
       return pick(
         [
-          `Hey, good ${partOfDay()}! I'm ${agentFirstName}'s assistant — I help buyers and investors find the right property in Dubai.`,
-          `Hi there, good ${partOfDay()}! I work with ${agentFirstName} on the Dubai side — off-plan, ready homes and investment stock.`,
-          `Hello! Good ${partOfDay()}. I'm ${agentFirstName}'s assistant here in Dubai — happy to help you find something that actually fits.`,
+          `Hey, good ${partOfDay()}! ${agentFirstName}'s assistant here.`,
+          `Hi, good ${partOfDay()} — ${agentFirstName}'s assistant here.`,
+          `Hello! ${agentFirstName}'s assistant here in Dubai.`,
         ],
         seed,
       );
@@ -92,9 +92,9 @@ export function smallTalkReply(
     case "how_are_you":
       return pick(
         [
-          `Doing well, thank you for asking! Dubai's been busy — plenty moving in the off-plan market right now.`,
-          `All good here, thanks! It's an active season in Dubai, lots of new launches coming through.`,
-          `Very well, thanks for asking. Busy few weeks — the market hasn't slowed down at all.`,
+          `Doing well, thanks — busy season in Dubai.`,
+          `All good here, thanks. Plenty moving at the moment.`,
+          `Very well, thanks for asking.`,
         ],
         seed,
         7,
@@ -107,18 +107,18 @@ export function smallTalkReply(
     case "goodbye":
       return pick(
         [
-          `Take care! I'll keep your requirements on file — message anytime and we'll pick up where we left off.`,
-          `Speak soon. Everything you've told me is saved, so there's no need to start over next time.`,
+          `Take care — message anytime, I'll remember where we got to.`,
+          `Speak soon. Everything's saved, so no need to start over.`,
         ],
         seed,
         17,
       );
 
     case "who_are_you":
-      return `I'm ${agentFirstName}'s assistant — I handle the first conversation so he can focus on the buyers who are ready to move. Everything you tell me goes straight to him, and he picks it up personally from there.`;
+      return `I'm ${agentFirstName}'s assistant — I take the first few details so he can pick it up properly. Everything goes straight to him.`;
 
     case "human":
-      return `Of course — ${agentFirstName} will pick this up himself. So he can come back to you properly prepared, can I take a couple of quick details first?`;
+      return `Of course — ${agentFirstName} will call you himself. When suits you?`;
   }
 }
 
@@ -136,16 +136,16 @@ export function acknowledge(
 
   if (incoming.community) {
     const notes: Record<string, string> = {
-      "Dubai Marina": "one of the most liquid rental markets in the city",
-      "Emaar Beachfront": "beachfront stock, and it holds value well",
-      "Palm Jumeirah": "always in demand, and supply is genuinely limited",
-      "Dubai Creek Harbour": "a lot of the new launches are concentrated there",
-      "Downtown Dubai": "strong short-let numbers around the Boulevard",
-      "Business Bay": "good yields, and it's still priced under Downtown",
-      "Jumeirah Village Circle": "the best entry point if you're starting a portfolio",
-      "Damac Hills": "family territory — quieter, more space for the money",
-      "Arabian Ranches": "villa community, popular with families settling long term",
-      "Dubai Hills Estate": "one of the strongest family communities right now",
+      "Dubai Marina": "strong rental demand there",
+      "Emaar Beachfront": "beachfront, holds value well",
+      "Palm Jumeirah": "limited supply, always in demand",
+      "Dubai Creek Harbour": "lots of new launches there",
+      "Downtown Dubai": "strong short-let numbers",
+      "Business Bay": "good yields, priced under Downtown",
+      "Jumeirah Village Circle": "good entry point",
+      "Damac Hills": "family territory, more space",
+      "Arabian Ranches": "villa community, family favourite",
+      "Dubai Hills Estate": "strong family community",
     };
     const note = notes[incoming.community];
     bits.push(note ? `${incoming.community} — ${note}.` : `${incoming.community}, noted.`);
@@ -154,32 +154,29 @@ export function acknowledge(
   const budget = incoming.budgetMax ?? incoming.budgetMin;
   if (budget) {
     const m = budget / 1_000_000;
-    if (budget >= 5_000_000) bits.push(`At AED ${m.toFixed(1)}M you're into the prime end, so you'll have real choice.`);
-    else if (budget >= 2_000_000) bits.push(`AED ${m.toFixed(1)}M is a workable budget in most of the good communities.`);
-    else if (budget >= 1_000_000) bits.push(`AED ${m.toFixed(2)}M opens up a decent range, especially off-plan.`);
-    else bits.push(`Noted on budget.`);
+    if (budget >= 5_000_000) bits.push(`AED ${m.toFixed(1)}M — that's the prime end, plenty of choice.`);
+    else if (budget >= 2_000_000) bits.push(`AED ${m.toFixed(1)}M works in most good areas.`);
+    else if (budget >= 1_000_000) bits.push(`AED ${m.toFixed(2)}M gives a decent range, especially off-plan.`);
+    else bits.push(`Noted.`);
   }
 
   if (incoming.payment === "cash") {
-    bits.push(pick(
-      [`Cash puts you in a stronger position on price.`, `Cash buyers get taken seriously here — that helps.`],
-      seed, 3,
-    ));
+    bits.push(pick([`Cash helps on price.`, `Cash puts you in a stronger position.`], seed, 3));
   } else if (incoming.payment === "mortgage") {
-    bits.push(`Mortgage is straightforward here — Rahul can introduce an independent broker when you're ready.`);
+    bits.push(`Mortgage is straightforward here.`);
   }
 
   if (incoming.timeline === "immediate" || incoming.timeline === "within_1_month") {
-    bits.push(`And you're moving quickly, understood.`);
+    bits.push(`Moving quickly, understood.`);
   }
 
   if (incoming.purpose === "investment" && !incoming.community) {
-    bits.push(`Investment focus, noted — that changes which communities I'd point you at.`);
+    bits.push(`Investment focus, noted.`);
   }
 
   if (bits.length === 0) return null;
   // Two facts is a natural amount to reflect back; more reads like a receipt.
-  return bits.slice(0, 2).join(" ");
+  return bits.slice(0, 1).join(" ");
 }
 
 /** Softens the jump from acknowledgement into the next question. */
@@ -216,8 +213,8 @@ export function handoffLine(agentFirstName: string, isHot: boolean, seed: string
   if (isHot) {
     return pick(
       [
-        `I've flagged this to ${agentFirstName} as a priority — he'll come back to you personally, usually within the day.`,
-        `${agentFirstName} will pick this up himself shortly; I've marked it urgent on his side.`,
+        `I've flagged this to ${agentFirstName} — he'll come back to you today.`,
+        `${agentFirstName} will pick this up personally, usually within the day.`,
       ],
       seed,
       31,
@@ -225,8 +222,8 @@ export function handoffLine(agentFirstName: string, isHot: boolean, seed: string
   }
   return pick(
     [
-      `I'll pass this to ${agentFirstName} — he'll follow up with anything that fits.`,
-      `${agentFirstName} will review this and come back with options.`,
+      `I'll pass this to ${agentFirstName}.`,
+      `${agentFirstName} will come back with options.`,
     ],
     seed,
     37,
