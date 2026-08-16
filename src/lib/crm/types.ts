@@ -9,6 +9,13 @@ export type PaymentMethod = "cash" | "mortgage" | "undecided";
 export type Temperature = "hot" | "warm" | "cold";
 
 export interface LeadRequirements {
+  /**
+   * Fields the lead has actively declined to narrow ("any", "you suggest"),
+   * or that we asked about and moved past. Never asked again.
+   */
+  skipped?: string[];
+  /** Free text the lead gave for when they are available. */
+  preferredTime?: string;
   intent?: LeadIntent;
   budgetMin?: number;
   budgetMax?: number;
@@ -51,6 +58,12 @@ export interface RecommendedProperty {
 }
 
 export interface Lead {
+  /**
+   * The question currently on the table, so a bare "2" can be resolved
+   * against the options we offered and a stalled question can be dropped
+   * rather than repeated.
+   */
+  pending?: { key: string; options: string[]; asks: number };
   id: string;
   visitorId: string;
   name?: string;
@@ -65,6 +78,7 @@ export interface Lead {
   nextAction: string;
   summary: string;
   viewingRequested: boolean;
+  callRequested?: boolean;
   createdAt: string;
   updatedAt: string;
 }

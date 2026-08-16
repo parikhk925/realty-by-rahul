@@ -66,6 +66,8 @@ function toLead(row: Record<string, unknown>): Lead {
     nextAction: (row.next_action as string) ?? "",
     summary: (row.summary as string) ?? "",
     viewingRequested: Boolean(row.viewing_requested),
+    callRequested: Boolean(row.call_requested),
+    pending: (row.pending ?? undefined) as Lead["pending"],
     createdAt: row.created_at as string,
     updatedAt: row.updated_at as string,
   };
@@ -87,6 +89,8 @@ function toRow(lead: Lead) {
     next_action: lead.nextAction,
     summary: lead.summary,
     viewing_requested: lead.viewingRequested,
+    call_requested: lead.callRequested ?? false,
+    pending: lead.pending ?? null,
     created_at: lead.createdAt,
     updated_at: lead.updatedAt,
   };

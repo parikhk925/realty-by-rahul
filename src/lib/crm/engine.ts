@@ -6,7 +6,15 @@ import {
   handoffLine,
   smallTalkReply,
 } from "./conversation";
-import { extractRequirements, isCorrection, mergeRequirements } from "./extract";
+import {
+  extractAvailability,
+  extractRequirements,
+  isCorrection,
+  mergeRequirements,
+  saysNoPreference,
+  wantsCall,
+  wantsViewing,
+} from "./extract";
 import { diagnoseNoMatch, recommendProperties } from "./recommend";
 import { scoreLead } from "./score";
 import { findLeadByVisitor, saveLead } from "./store";
@@ -123,14 +131,20 @@ function answerFromKnowledge(message: string): string | null {
   return null;
 }
 
-function wantsViewing(message: string): boolean {
-  return /\bviewing\b|\bvisit\b|\bsee (it|the)\b|\btour\b|\bappointment\b|\bbook\b/i.test(
-    message,
+function nextQuestion(requirements: LeadRequirements): Question | null {
+  const skipped = requirements.skipped ?? [];
+  return (
+    QUESTIONS.find(
+      (q) => requirements[q.key] === undefined && !skipped.includes(q.key),
+    ) ?? null
   );
 }
 
-function nextQuestion(requirements: LeadRequirements): Question | null {
-  return QUESTIONS.find((q) => requirements[q.key] === undefined) ?? null;
+/** Marks a field as settled so the flow moves on instead of repeating. */
+function skip(requirements: LeadRequirements, key: string): LeadRequirements {
+  const skipped = new Set(requirements.skipped ?? []);
+  skipped.add(key);
+  return { ...requirements, skipped: [...skipped] };
 }
 
 function completeness(requirements: LeadRequirements): number {
@@ -174,14 +188,56 @@ export async function processMessage(input: {
   const now = new Date().toISOString();
   const existing = await findLeadByVisitor(input.visitorId);
 
-  const extracted = extractRequirements(input.message);
-  const requirements = mergeRequirements(
+  // WhatsApp renders quick replies as a numbered list, so "2" is a normal
+  // answer. Resolve it against the options we actually offered before any
+  // parsing runs, otherwise the digit reads as a budget.
+  const pending = existing?.pending;
+  let message = input.message;
+  const asDigit = Number(message.trim());
+  if (
+    pending &&
+    Number.isInteger(asDigit) &&
+    asDigit >= 1 &&
+    asDigit <= pending.options.length
+  ) {
+    message = pending.options[asDigit - 1];
+  }
+
+  const extracted = extractRequirements(message);
+  let requirements = mergeRequirements(
     existing?.requirements ?? {},
     extracted,
-    isCorrection(input.message),
+    isCorrection(message),
   );
 
-  const viewingRequested = (existing?.viewingRequested ?? false) || wantsViewing(input.message);
+  // "Any", "you suggest", "no preference" is a real answer. Treating it as
+  // silence is what turns a conversation back into a form.
+  if (pending && saysNoPreference(message)) {
+    requirements = skip(requirements, pending.key);
+  }
+
+  // If a question has already been put once and still has no answer, move on
+  // rather than repeat it. Repetition is the single thing that makes a bot
+  // feel broken.
+  if (
+    pending &&
+    requirements[pending.key as keyof LeadRequirements] === undefined &&
+    !(requirements.skipped ?? []).includes(pending.key) &&
+    pending.asks >= 1
+  ) {
+    requirements = skip(requirements, pending.key);
+  }
+
+  const availability = extractAvailability(message);
+  if (availability && !requirements.preferredTime) {
+    requirements = { ...requirements, preferredTime: availability };
+  }
+
+  // Sticky, like a viewing: the request survives the turn where the time
+  // is given, so the reply confirms rather than resuming the questionnaire.
+  const callRequested = (existing?.callRequested ?? false) || wantsCall(message);
+  const viewingRequested =
+    (existing?.viewingRequested ?? false) || wantsViewing(message);
   const { score, temperature, breakdown } = scoreLead(requirements);
 
   // Recommend only once there is enough to match on honestly.
@@ -199,9 +255,9 @@ export async function processMessage(input: {
   // conversation is identical, which is exactly what makes a bot sound
   // like a bot.
   const turnSeed = `${input.visitorId}:${existing?.conversation.length ?? 0}`;
-  const knowledge = answerFromKnowledge(input.message);
+  const knowledge = answerFromKnowledge(message);
   const question = nextQuestion(requirements);
-  const smallTalk = detectSmallTalk(input.message);
+  const smallTalk = detectSmallTalk(message);
   const answeredCount = QUESTIONS.filter((q) => requirements[q.key] !== undefined).length;
 
   // Only acknowledge facts that arrived in *this* message — repeating things
@@ -210,6 +266,9 @@ export async function processMessage(input: {
 
   let reply: string;
   let quickReplies: string[] = [];
+  // Set when the reply is asking for a time, so the options are attributed to
+  // scheduling rather than to whatever question happened to be next.
+  let askedSchedule = false;
 
   if (smallTalk && Object.keys(extracted).length === 0) {
     // Pure small talk with nothing to extract: answer it warmly, then move on.
@@ -232,9 +291,17 @@ export async function processMessage(input: {
       reply += `\n\n${bridgeToQuestion(turnSeed, answeredCount === 0)} ${question.prompt}`;
       quickReplies = question.options;
     }
-  } else if (viewingRequested && hasEnough) {
-    reply = `${ack ? ack + " " : ""}Happy to arrange that — ${firstName} handles viewings himself. What day and time suits you?`;
-    quickReplies = ["This week", "This weekend", "Next week"];
+  } else if (callRequested || (viewingRequested && hasEnough)) {
+    const thing = callRequested ? "a call" : "a viewing";
+    if (requirements.preferredTime) {
+      const verb = callRequested ? "call you" : "meet you";
+      reply = `${ack ? ack + " " : ""}Perfect — ${firstName} will ${verb} ${requirements.preferredTime}. I've put it on his list along with everything you've told me.`;
+      quickReplies = [];
+    } else {
+      reply = `${ack ? ack + " " : ""}Happy to arrange ${thing}. When suits you?`;
+      quickReplies = ["Today", "Tomorrow", "This weekend", "Next week"];
+      askedSchedule = true;
+    }
   } else if (recommended.length > 0 && !question) {
     reply = `${ack ? ack + "\n\n" : ""}Based on that, here's what I'd put in front of you from ${firstName}'s current portfolio.`;
     quickReplies = ["Book a viewing", "What's the payment plan?", "Show me more"];
@@ -280,11 +347,34 @@ export async function processMessage(input: {
     stage: deriveStage(requirements, viewingRequested, recommended.length),
     summary: summarise(requirements),
     viewingRequested,
+    callRequested,
     createdAt: existing?.createdAt ?? now,
     updatedAt: now,
   };
 
-  const lead: Lead = { ...base, nextAction: deriveNextAction(base) };
+  // Carry the question forward. `asks` is what lets the next turn decide to
+  // move on rather than repeat.
+  const askedKey = askedSchedule
+    ? "__schedule"
+    : question && quickReplies.length > 0
+      ? question.key
+      : undefined;
+  const nextPending =
+    askedKey !== undefined
+      ? {
+          key: String(askedKey),
+          options: quickReplies,
+          asks: pending?.key === String(askedKey) ? pending.asks + 1 : 0,
+        }
+      : quickReplies.length > 0
+        ? { key: "__followup", options: quickReplies, asks: 0 }
+        : undefined;
+
+  const lead: Lead = {
+    ...base,
+    pending: nextPending,
+    nextAction: deriveNextAction(base),
+  };
   await saveLead(lead);
 
   return { reply, quickReplies, recommended: lead.recommended, lead };

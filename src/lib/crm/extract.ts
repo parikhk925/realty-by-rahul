@@ -203,3 +203,43 @@ export function mergeRequirements(
 export function isCorrection(message: string): boolean {
   return /\bactually\b|\binstead\b|\bnot\b .*\brather\b|\bchange\b|\bno,\s/i.test(message);
 }
+
+
+/**
+ * "Any", "you pick", "no preference".
+ *
+ * A qualifier that cannot take this for an answer is just a form: it will
+ * ask the same question until the person leaves.
+ */
+export function saysNoPreference(message: string): boolean {
+  return /^(any\b|anything|any of (them|these)|any ?one|open\b|open to (suggestions|anything)|no preference|not fussed|flexible|whatever|does\s?n'?t matter|do\s?n'?t mind|you (suggest|decide|pick|choose|tell me)|your call|up to you|not sure|no idea|dunno|do\s?n'?t know|no specific|nothing specific|all good|either)/i.test(
+    message.trim(),
+  );
+}
+
+/** "today", "tomorrow", "this weekend", "Friday 3pm". */
+export function extractAvailability(message: string): string | undefined {
+  const t = message.trim();
+  const day = t.match(
+    /\b(today|tonight|tomorrow|this (week|weekend|evening|afternoon|morning)|next week|(?:mon|tues|wednes|thurs|fri|satur|sun)day|weekend)\b/i,
+  );
+  const time = t.match(/\b(\d{1,2}(?::\d{2})?\s*(?:am|pm))\b/i);
+  if (day && time) return `${day[0]} at ${time[0]}`;
+  if (day) return day[0];
+  if (time) return time[0];
+  return undefined;
+}
+
+/** A call is not a viewing; answering one with the other reads as broken. */
+export function wantsCall(message: string): boolean {
+  return /\bbook a call\b|\bcall me\b|\bphone call\b|\bschedule a call\b|\bspeak (to|with)\b|\btalk to\b|\bring me\b/i.test(
+    message,
+  );
+}
+
+export function wantsViewing(message: string): boolean {
+  if (wantsCall(message)) return false;
+  return /\bviewing\b|\bvisit\b|\bsee (it|the|this)\b|\btour\b|\bshow me around\b/i.test(
+    message,
+  );
+}
