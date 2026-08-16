@@ -63,3 +63,50 @@ export function withQuickReplies(reply: string, quickReplies: string[]): string 
   const options = quickReplies.map((option, i) => `${i + 1}. ${option}`).join("\n");
   return `${reply}\n\n${options}`;
 }
+
+interface Recommendation {
+  slug: string;
+  title: string;
+  community: string;
+  price: string;
+  priceQualifier: string;
+  bedrooms: number;
+  matchPercentage: number;
+  handover?: string;
+  paymentPlan?: string;
+}
+
+/**
+ * Appends the matched properties as text with a link each.
+ *
+ * The website widget renders these as cards; on WhatsApp there is no such
+ * affordance, so without this the assistant announces that it has found
+ * matches and then never says what they are — which is the entire point of
+ * the conversation.
+ *
+ * Kept to three: WhatsApp collapses long messages behind "read more", and a
+ * wall of listings is worse than the two or three that actually fit.
+ */
+export function withRecommendations(
+  reply: string,
+  recommended: Recommendation[],
+  baseUrl: string,
+): string {
+  if (recommended.length === 0) return reply;
+
+  const lines = recommended.slice(0, 3).map((p) => {
+    const beds = p.bedrooms === 0 ? "Studio" : `${p.bedrooms} bed`;
+    const extra = p.handover
+      ? ` · Handover ${p.handover}`
+      : p.paymentPlan
+        ? ` · ${p.paymentPlan}`
+        : "";
+    return [
+      `*${p.title}*`,
+      `${p.community} · ${beds} · ${p.priceQualifier} ${p.price}${extra}`,
+      `${baseUrl}/listing/${encodeURIComponent(p.slug)}`,
+    ].join("\n");
+  });
+
+  return `${reply}\n\n${lines.join("\n\n")}`;
+}

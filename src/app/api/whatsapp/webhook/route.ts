@@ -2,7 +2,12 @@ import { NextResponse, type NextRequest } from "next/server";
 import { processMessage } from "@/lib/crm/engine";
 import { canReceive, whatsappConfig } from "@/lib/whatsapp/config";
 import { parseWebhookPayload, verifySignature } from "@/lib/whatsapp/verify";
-import { sendWhatsAppText, withQuickReplies } from "@/lib/whatsapp/send";
+import {
+  sendWhatsAppText,
+  withQuickReplies,
+  withRecommendations,
+} from "@/lib/whatsapp/send";
+import { publicAppUrl } from "@/lib/property-data";
 
 // crypto.timingSafeEqual needs the Node runtime, not Edge.
 export const runtime = "nodejs";
@@ -83,9 +88,15 @@ export async function POST(request: NextRequest) {
         name: message.profileName ?? undefined,
       });
 
+      // Matched properties must travel with the reply. The website widget
+      // draws them as cards; on WhatsApp there is nothing to draw, so without
+      // this the assistant says it found matches and never names them.
       await sendWhatsAppText(
         message.from,
-        withQuickReplies(result.reply, result.quickReplies),
+        withQuickReplies(
+          withRecommendations(result.reply, result.recommended, publicAppUrl),
+          result.quickReplies,
+        ),
       );
     } catch (error) {
       // One bad message must not fail the whole batch.
