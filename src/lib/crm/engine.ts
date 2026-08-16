@@ -45,14 +45,16 @@ interface Question {
 /**
  * What we ask, in order.
  *
- * Three questions, not eight. Everything else — bedrooms, property type,
- * off-plan, payment — is captured when the lead mentions it, but is never
- * asked for. A buyer who wanted to fill in eight fields would have used the
- * form on the website.
+ * Five, not eight — and every one is a question a Dubai agent actually asks.
+ * Off-plan vs ready and cash vs mortgage change which stock is worth showing
+ * and how seriously the lead is taken, so they are worth a turn each.
+ *
+ * Bedrooms, property type and timeline are still captured when mentioned but
+ * never asked for; they rarely change the shortlist enough to spend a message
+ * on.
  *
  * No option lists: on WhatsApp a numbered menu invites one-word replies and
- * makes the whole thing feel like an IVR. The extractor handles free text,
- * so let people type.
+ * makes the whole thing feel like an IVR. The extractor handles free text.
  */
 const QUESTIONS: Question[] = [
   {
@@ -68,6 +70,16 @@ const QUESTIONS: Question[] = [
   {
     key: "community",
     prompt: "Any particular area in mind?",
+    options: [],
+  },
+  {
+    key: "marketType",
+    prompt: "Off-plan or ready to move in?",
+    options: [],
+  },
+  {
+    key: "payment",
+    prompt: "Cash or mortgage?",
     options: [],
   },
 ];
